@@ -171,4 +171,21 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     `;
   }
+
+  // Also create an observer to make elements visible when scrolled into view
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  // Observe all section containers
+  document.querySelectorAll('.features-container, .section-container, .hero-content').forEach(el => {
+    observer.observe(el);
+  });
 });
