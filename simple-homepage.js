@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Clear out any existing content in the containers
+  document.getElementById('breefly-hero-container').innerHTML = '';
+  document.getElementById('breefly-features-container').innerHTML = '';
+  document.getElementById('breefly-how-it-works-container').innerHTML = '';
+  document.getElementById('breefly-testimonials-container').innerHTML = '';
+  document.getElementById('breefly-cta-container').innerHTML = '';
+  
   // Hero Section
   const heroContainer = document.getElementById('breefly-hero-container');
   if (heroContainer) {
