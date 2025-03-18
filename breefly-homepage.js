@@ -82,45 +82,63 @@
       };
     }, []);
 
-    const createSvgIcon = (pathData) => {
-      return React.createElement(
-        'svg',
-        { 
-          xmlns: 'http://www.w3.org/2000/svg', 
-          width: '32', 
-          height: '32', 
-          viewBox: '0 0 24 24', 
-          fill: 'none', 
-          stroke: 'currentColor', 
-          strokeWidth: '2', 
-          strokeLinecap: 'round', 
-          strokeLinejoin: 'round' 
-        },
-        pathData
-      );
-    };
-
     const features = [
       {
-        icon: createSvgIcon([
-          React.createElement('circle', { cx: '12', cy: '12', r: '10', key: 'circle' }),
-          React.createElement('polyline', { points: '12 6 12 12 16 14', key: 'polyline' })
-        ]),
+        icon: React.createElement(
+          'svg',
+          { 
+            xmlns: 'http://www.w3.org/2000/svg', 
+            width: '32', 
+            height: '32', 
+            viewBox: '0 0 24 24', 
+            fill: 'none', 
+            stroke: 'currentColor', 
+            strokeWidth: '2', 
+            strokeLinecap: 'round', 
+            strokeLinejoin: 'round' 
+          },
+          React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
+          React.createElement('polyline', { points: '12 6 12 12 16 14' })
+        ),
         title: "Real-Time Insights",
         description: "Stay ahead with instant market updates and analysis tailored to your portfolio."
       },
       {
-        icon: createSvgIcon([
-          React.createElement('path', { d: 'M22 11.08V12a10 10 0 1 1-5.93-9.14', key: 'path' }),
-          React.createElement('polyline', { points: '22 4 12 14.01 9 11.01', key: 'polyline' })
-        ]),
+        icon: React.createElement(
+          'svg',
+          { 
+            xmlns: 'http://www.w3.org/2000/svg', 
+            width: '32', 
+            height: '32', 
+            viewBox: '0 0 24 24', 
+            fill: 'none', 
+            stroke: 'currentColor', 
+            strokeWidth: '2', 
+            strokeLinecap: 'round', 
+            strokeLinejoin: 'round' 
+          },
+          React.createElement('path', { d: 'M22 11.08V12a10 10 0 1 1-5.93-9.14' }),
+          React.createElement('polyline', { points: '22 4 12 14.01 9 11.01' })
+        ),
         title: "Proactive Guidance",
         description: "Receive smart recommendations based on your trading style and goals."
       },
       {
-        icon: createSvgIcon([
-          React.createElement('path', { d: 'M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3', key: 'path' })
-        ]),
+        icon: React.createElement(
+          'svg',
+          { 
+            xmlns: 'http://www.w3.org/2000/svg', 
+            width: '32', 
+            height: '32', 
+            viewBox: '0 0 24 24', 
+            fill: 'none', 
+            stroke: 'currentColor', 
+            strokeWidth: '2', 
+            strokeLinecap: 'round', 
+            strokeLinejoin: 'round' 
+          },
+          React.createElement('path', { d: 'M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3' })
+        ),
         title: "Adaptive Learning",
         description: "Our platform continuously evolves based on your interactions to deliver better results."
       }
@@ -316,10 +334,8 @@
                     strokeLinecap: 'round', 
                     strokeLinejoin: 'round' 
                   },
-                  [
-                    React.createElement('path', { d: 'M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z', key: 'path1' }),
-                    React.createElement('path', { d: 'M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z', key: 'path2' })
-                  ]
+                  React.createElement('path', { d: 'M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z' }),
+                  React.createElement('path', { d: 'M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z' })
                 )
               ),
               React.createElement('p', { className: 'testimonial-quote' }, testimonial.quote),
@@ -397,4 +413,4 @@
       ReactDOM.createRoot(ctaContainer).render(React.createElement(CTASection));
     }
   });
-  
+})();
