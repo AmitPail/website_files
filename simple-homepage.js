@@ -8,36 +8,36 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Hero Section
   const heroContainer = document.getElementById('breefly-hero-container');
-  if (heroContainer) {
-    heroContainer.innerHTML = `
-      <div class="breefly-hero">
-        <div class="hero-bg">
-          <div class="floating-element floating-element-1"></div>
-          <div class="floating-element floating-element-2"></div>
-          <div class="grid-background"></div>
+if (heroContainer) {
+  heroContainer.innerHTML = `
+    <div class="breefly-hero">
+      <div class="hero-bg">
+        <div class="floating-element floating-element-1"></div>
+        <div class="floating-element floating-element-2"></div>
+        <div class="grid-background"></div>
+      </div>
+      <div class="hero-content visible">
+        <div class="welcome-text">WELCOME TO YOUR NEW TRADING COMPANION</div>
+        <h1>Breefly.ai</h1>
+        <p class="subtitle">AI powered trading</p>
+        <div class="hero-tagline">
+          <div class="hero-features">
+            <div>more <span class="highlight">power</span>,</div>
+            <div>more <span class="highlight">knowledge</span>,</div>
+            <div>faster <span class="highlight">news</span></div>
+            <div>and <span class="highlight">insights</span></div>
+          </div>
         </div>
-        <div class="hero-content visible">
-          <div class="welcome-text">WELCOME TO YOUR NEW TRADING COMPANION</div>
-          <h1>Breefly.ai</h1>
-          <p class="subtitle">AI powered trading</p>
-          <div class="hero-tagline">
-            <div class="hero-features">
-              <div>more <span class="highlight">power</span>,</div>
-              <div>more <span class="highlight">knowledge</span>,</div>
-              <div>faster <span class="highlight">news</span></div>
-              <div>and <span class="highlight">insights</span></div>
-            </div>
-          </div>
-          <div class="cta-container">
-            <a href="/waitlist" class="primary-button">Coming Soon - Join The Waitlist Now!</a>
-          </div>
-          <div class="guarantee-text">
-            Trading, Learning, and getting better in a way you'll ❤️ guaranteed
-          </div>
+        <div class="cta-container">
+          <a href="https://waitlist.breefly.ai" class="primary-button">Coming Soon - Join The Waitlist Now!</a>
+        </div>
+        <div class="guarantee-text">
+          Trading, Learning, and getting better in a way you'll ❤️ guaranteed
         </div>
       </div>
-    `;
-  }
+    </div>
+  `;
+}
 
   // Features Section
   const featuresContainer = document.getElementById('breefly-features-container');
