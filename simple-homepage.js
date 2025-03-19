@@ -29,7 +29,7 @@ if (heroContainer) {
           </div>
         </div>
         <div class="cta-container">
-          <a href="https://waitlist.breefly.ai/" class="primary-button">Coming Soon - Join The Waitlist Now!</a>
+          <a href="waitlist.breefly.ai/" class="primary-button">Coming Soon - Join The Waitlist Now!</a>
         </div>
         <div class="guarantee-text">
           Trading, Learning, and getting better in a way you'll ❤️ guaranteed
