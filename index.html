@@ -45,6 +45,9 @@
     <link rel="stylesheet" href="./breefly-homepage-styles.css">
     <link rel="stylesheet" href="breefly-homepage-styles.css">
     <link rel="stylesheet" href="https://amitpail.github.io/website_files/breefly-homepage-styles.css">
+    
+    <!-- Load your JavaScript early to initialize loading indicator -->
+    <script src="./simple-homepage.js"></script>
 </head>
 <body>
     <!-- Component Containers -->
@@ -58,13 +61,13 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
-    <!-- Load your JavaScript - with three different ways to try loading it -->
-    <script src="./simple-homepage.js"></script>
+    <!-- Fallback script loading -->
     <script>
         // Fallback in case the above script doesn't load
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if the script loaded successfully
-            if (typeof window.animationSettings === 'undefined') {
+            // Check if the containers have been populated
+            const heroContainer = document.getElementById('breefly-hero-container');
+            if (heroContainer && heroContainer.innerHTML === '') {
                 console.log('Trying alternative script path...');
                 // Try loading from absolute URL if relative path failed
                 const script = document.createElement('script');
