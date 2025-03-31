@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Create and add loading indicator first thing
+  const loadingIndicator = document.createElement('div');
+  loadingIndicator.className = 'loading-indicator';
+  loadingIndicator.innerHTML = `
+    <div class="loading-container">
+      <div class="loading-logo">B</div>
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading Breefly.ai</div>
+    </div>
+  `;
+  document.body.appendChild(loadingIndicator);
+
   // Animation settings - you can toggle these to test different effects
   const animationSettings = {
     enableBackgroundAnimations: true,   // Floating elements & grid
@@ -361,4 +373,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   `;
   document.head.appendChild(styleElement);
+  
+  // When all content is loaded, hide the loading indicator with a fade effect
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      loadingIndicator.classList.add('loading-complete');
+      setTimeout(function() {
+        loadingIndicator.style.display = 'none';
+      }, 500); // Remove from DOM after fade animation completes
+    }, 500); // Small delay to ensure everything is ready
+  });
+  
+  // Fallback: If load event doesn't fire properly, hide loader after timeout
+  setTimeout(function() {
+    if (!loadingIndicator.classList.contains('loading-complete')) {
+      loadingIndicator.classList.add('loading-complete');
+      setTimeout(function() {
+        loadingIndicator.style.display = 'none';
+      }, 500);
+    }
+  }, 5000); // 5 second timeout as failsafe
 });
