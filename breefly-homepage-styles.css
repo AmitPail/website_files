@@ -130,6 +130,16 @@
 
 /* Animated grid background */
 .grid-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(15, 22, 33, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(15, 22, 33, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+  opacity: 0.3;
   animation: gridPulse 15s ease-in-out infinite;
 }
 
@@ -139,115 +149,428 @@
   100% { background-size: 40px 40px; opacity: 0.3; }
 }
 
-/* ============== UI ELEMENT ANIMATIONS ============== */
+/* ============== HERO SECTION ============== */
 
-/* Smooth hover transitions for cards */
-.feature-card {
-  transition: transform 0.5s ease, box-shadow 0.5s ease, background-color 0.5s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Animate feature icons */
-.feature-icon {
-  transition: all 0.5s ease;
+.breefly-hero {
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
+  padding: 20px;
 }
 
-.feature-card:hover .feature-icon {
-  transform: scale(1.1);
-  background: linear-gradient(135deg, rgba(95, 191, 177, 0.3), rgba(15, 111, 101, 0.3));
-}
-
-.feature-icon:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
-}
-
-.feature-card:hover .feature-icon:after {
-  left: 100%;
-}
-
-/* Button pulse effect */
-.primary-button {
-  position: relative;
-  overflow: hidden;
-}
-
-.primary-button:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
-}
-
-.primary-button:hover:after {
-  left: 100%;
-}
-
-@keyframes buttonPulse {
-  0% { box-shadow: 0 0 0 0 rgba(95, 191, 177, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(95, 191, 177, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(95, 191, 177, 0); }
-}
-
-.cta-container .primary-button {
-  animation: buttonPulse 2s infinite;
-}
-
-/* Step card animations */
-.step-card {
-  transition: all 0.5s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.step-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.step-card:before {
-  content: '';
+.hero-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease;
+  height: 100%;
+  z-index: 0;
 }
 
-.step-card:hover:before {
-  transform: scaleX(1);
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
 }
 
-/* ============== SECTION TRANSITIONS ============== */
+.hero-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* Improved page scroll animation */
+.welcome-text {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: var(--secondary-text);
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: var(--secondary-text);
+}
+
+.hero-tagline {
+  margin-bottom: 40px;
+}
+
+.hero-features {
+  font-size: 1.8rem;
+  font-weight: 600;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-features > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  line-height: 40px;
+  animation: slideFeatures 10s infinite;
+  opacity: 0;
+}
+
+.hero-features > div:nth-child(1) { animation-delay: 0s; }
+.hero-features > div:nth-child(2) { animation-delay: 2.5s; }
+.hero-features > div:nth-child(3) { animation-delay: 5s; }
+.hero-features > div:nth-child(4) { animation-delay: 7.5s; }
+
+@keyframes slideFeatures {
+  0%, 10%, 90%, 100% { transform: translateY(0); opacity: 0; }
+  15%, 85% { transform: translateY(0); opacity: 1; }
+}
+
+.highlight {
+  color: var(--primary);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-container {
+  margin: 30px 0;
+}
+
+.primary-button {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--background);
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 5px 15px rgba(95, 191, 177, 0.3);
+}
+
+.primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(95, 191, 177, 0.4);
+  background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+}
+
+.guarantee-text {
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+  margin-top: 20px;
+}
+
+/* ============== FEATURES SECTION ============== */
+
+.breefly-features {
+  position: relative;
+  padding: 80px 20px;
+  overflow: hidden;
+}
+
+.features-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 1;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.features-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.features-subtitle {
+  font-size: 1.2rem;
+  color: var(--secondary-text);
+  max-width: 700px;
+  margin: 0 auto 60px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.feature-card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgba(95, 191, 177, 0.1);
+  margin-bottom: 20px;
+  color: var(--primary);
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.feature-description {
+  color: var(--secondary-text);
+  line-height: 1.6;
+}
+
+/* ============== HOW IT WORKS SECTION ============== */
+
+.how-it-works-section {
+  position: relative;
+  padding: 80px 20px;
+  overflow: hidden;
+}
+
 .section-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 1;
+  text-align: center;
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 1s ease, transform 1s ease;
 }
 
 .section-container.visible {
-  opacity:
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: var(--secondary-text);
+  max-width: 700px;
+  margin: 0 auto 60px;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.step-card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 15px;
+  opacity: 0.7;
+}
+
+.step-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.step-description {
+  color: var(--secondary-text);
+  line-height: 1.6;
+}
+
+/* ============== TESTIMONIALS SECTION ============== */
+
+.testimonials-section {
+  position: relative;
+  padding: 80px 20px;
+  overflow: hidden;
+}
+
+.trading-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 50px 0;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.stat-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  color: var(--secondary-text);
+  font-size: 1rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.testimonial-card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.quote-icon {
+  color: var(--primary);
+  opacity: 0.2;
+  margin-bottom: 20px;
+}
+
+.testimonial-quote {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.testimonial-author {
+  color: var(--secondary-text);
+}
+
+.testimonial-role {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-left: 10px;
+}
+
+/* ============== CTA SECTION ============== */
+
+.cta-section {
+  position: relative;
+  padding: 80px 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.cta-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.chart-container {
+  margin-bottom: 40px;
+  height: 80px;
+  position: relative;
+}
+
+.chart-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 3s forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ============== RESPONSIVE ADJUSTMENTS ============== */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3rem;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-features {
+    font-size: 1.5rem;
+  }
+  
+  .features-grid, .steps-container, .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .trading-stats {
+    flex-direction: column;
+  }
+  
+  .stat-item {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  .primary-button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============== ANIMATIONS CONTROLLER ============== */
+
+.no-animation {
+  animation: none !important;
+  transition: none !important;
+}
+
+.section-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
