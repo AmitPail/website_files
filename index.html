@@ -3,222 +3,2450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Breefly.ai | Your AI Trading Companion</title>
-    <meta name="description" content="Breefly is your AI-powered trading companion that provides real-time insights, proactive guidance, and adaptive learning to enhance your trading experience.">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="assets/icons/favicon.ico">
-    
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <title>Breefly | Your AI Trading Companion</title>
+    <meta name="description" content="Experience the future of trading with Breefly's AI-powered insights and sophisticated analysis tools.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand Colors */
+            --primary: #5FBFB1;
+            --primary-light: #7DD3C7;
+            --primary-dark: #4A9B91;
+            --primary-ultra-light: rgba(95, 191, 177, 0.08);
+            
+            /* Sophisticated Neutrals */
+            --white: #FFFFFF;
+            --gray-50: #FAFBFC;
+            --gray-100: #F4F6F8;
+            --gray-200: #E8ECEF;
+            --gray-300: #D1D9E0;
+            --gray-400: #9AA5B1;
+            --gray-500: #6B7785;
+            --gray-600: #4A5568;
+            --gray-700: #2D3748;
+            --gray-800: #1A202C;
+            --gray-900: #0F1419;
+            
+            /* Glass Effects */
+            --glass-light: rgba(255, 255, 255, 0.02);
+            --glass-medium: rgba(255, 255, 255, 0.05);
+            --glass-strong: rgba(255, 255, 255, 0.1);
+            
+            /* Shadows */
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --shadow-strong: 0 16px 40px rgba(0, 0, 0, 0.16);
+            --shadow-accent: 0 8px 32px rgba(95, 191, 177, 0.15);
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing System */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 4rem;
+            --space-3xl: 6rem;
+            --space-4xl: 8rem;
+            
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 32px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--gray-900) 0%, #0A0E1A 100%);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-size: 14px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            max-width: 800px;
+            max-height: 90vh;
+            width: 90%;
+            margin: var(--space-lg);
+            transform: scale(0.9) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            padding: var(--space-xl) var(--space-xl) var(--space-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--white);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: var(--space-lg) var(--space-xl) var(--space-xl);
+            overflow-y: auto;
+            max-height: calc(90vh - 120px);
+        }
+
+        .modal-body h3 {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 600;
+            margin: var(--space-lg) 0 var(--space-md) 0;
+        }
+
+        .modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body p {
+            color: var(--gray-300);
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
+        }
+
+        .modal-body ul {
+            margin: var(--space-md) 0;
+            padding-left: var(--space-lg);
+        }
+
+        .modal-body li {
+            color: var(--gray-300);
+            line-height: 1.6;
+            margin-bottom: var(--space-sm);
+        }
+
+        .modal-body strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: var(--space-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--white);
+            font-size: 14px;
+            font-family: var(--font-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(95, 191, 177, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--gray-400);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--gray-900);
+            padding: var(--space-md) var(--space-xl);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--space-md);
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(95, 191, 177, 0.3);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .contact-info {
+            background: rgba(95, 191, 177, 0.05);
+            border: 1px solid rgba(95, 191, 177, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .contact-info h4 {
+            color: var(--primary);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .contact-info p {
+            margin-bottom: var(--space-sm);
+        }
+
+        .contact-info a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sophisticated Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gray-900) 0%, #0A0E1A 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.05);
+        }
+
+        .loading-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-lg);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: indicatorFadeIn 0.8s ease-out 0.5s forwards;
+        }
+
+        .loading-text {
+            font-size: 13px;
+            color: var(--gray-400);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            margin-right: 16px;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loading-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.3;
+            animation: dotPulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 12px rgba(95, 191, 177, 0.3);
+        }
+
+        .loading-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .loading-dot:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .loading-dot:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+
+        .loading-progress {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: rgba(95, 191, 177, 0.1);
+            border-radius: 1px;
+            overflow: hidden;
+            opacity: 0;
+            animation: progressFadeIn 0.8s ease-out 1.2s forwards;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            width: 0;
+            animation: progressFill 2.5s ease-out 1.5s forwards;
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        /* Loading Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes indicatorFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(95, 191, 177, 0.6);
+            }
+        }
+
+        @keyframes progressFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes progressFill {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Hide main content during loading */
+        body.loading {
+            overflow: hidden;
+        }
+
+        body.loading .nav,
+        body.loading .hero,
+        body.loading .section {
+            opacity: 0;
+        }
+
+        /* Enhanced Elegant Navigation */
+        .nav {
+            position: fixed;
+            top: var(--space-md);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: calc(100% - var(--space-2xl));
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-xl);
+            padding: var(--space-sm) var(--space-lg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(95, 191, 177, 0.15);
+            box-shadow: 0 12px 48px rgba(95, 191, 177, 0.08);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .nav.scrolled {
+            background: rgba(15, 20, 25, 0.9);
+            border-color: rgba(95, 191, 177, 0.2);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(40px);
+        }
+
+        .nav.scrolled:hover {
+            background: rgba(15, 20, 25, 0.95);
+            border-color: rgba(95, 191, 177, 0.3);
+            box-shadow: 0 16px 60px rgba(95, 191, 177, 0.12);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 40px;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo:hover {
+            color: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            transition: width 0.4s ease;
+            border-radius: 1px;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-lg);
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+            background: rgba(95, 191, 177, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.1) 0%, rgba(95, 191, 177, 0.05) 100%);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 60%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--gray-900);
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(95, 191, 177, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-cta:hover::before {
+            left: 100%;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(95, 191, 177, 0.3);
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        }
+
+        .nav-cta:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Hero Section - Luxury Hotel Lobby Feel */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: var(--space-4xl) var(--space-lg);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(600px circle at 20% 30%, rgba(95, 191, 177, 0.05) 0%, transparent 50%),
+                radial-gradient(800px circle at 80% 70%, rgba(95, 191, 177, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4xl);
+            align-items: center;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            background: var(--primary-ultra-light);
+            border: 1px solid rgba(95, 191, 177, 0.2);
+            border-radius: var(--radius-xl);
+            padding: var(--space-sm) var(--space-lg);
+            margin-bottom: var(--space-xl);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--primary-light);
+            letter-spacing: 0.02em;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 5vw, 72px);
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: var(--space-lg);
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--gray-300);
+            margin-bottom: var(--space-xl);
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-lg);
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--gray-900);
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-accent);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 48px rgba(95, 191, 177, 0.3);
+        }
+
+        .btn-secondary {
+            color: var(--gray-300);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            color: var(--white);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            z-index: 2;
+        }
+
+        .dashboard-preview {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            perspective: 1000px;
+        }
+
+        .dashboard-card {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-main {
+            width: 350px;
+            height: 280px;
+            top: 50px;
+            left: 0;
+            z-index: 3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card-secondary {
+            width: 280px;
+            height: 200px;
+            top: 120px;
+            right: 0;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite reverse;
+            animation-delay: -2s;
+        }
+
+        .card-accent {
+            width: 200px;
+            height: 140px;
+            bottom: 80px;
+            left: 100px;
+            z-index: 1;
+            background: rgba(95, 191, 177, 0.05);
+            border-color: rgba(95, 191, 177, 0.2);
+            animation: float 6s ease-in-out infinite;
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(2deg); }
+        }
+
+        .card-header {
+            height: 40px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 var(--space-md);
+            gap: var(--space-sm);
+        }
+
+        .card-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-400);
+        }
+
+        .card-dot:first-child { background: #FF5F57; }
+        .card-dot:nth-child(2) { background: #FFBD2E; }
+        .card-dot:nth-child(3) { background: #28CA42; }
+
+        .card-content {
+            padding: var(--space-lg);
+            height: calc(100% - 40px);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .chart-line {
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 1px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* Dynamic Background System */
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .bg-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: var(--particle-opacity, 0.15);
+            animation: float-particle 20s linear infinite;
+            animation-fill-mode: forwards;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(95, 191, 177, 0.3);
+        }
+
+        .particle:nth-child(odd) {
+            background: var(--primary-light);
+            animation-duration: 25s;
+            animation-direction: reverse;
+            box-shadow: 0 0 8px rgba(125, 211, 199, 0.4);
+        }
+
+        .particle:nth-child(3n) {
+            background: rgba(95, 191, 177, 0.8);
+            animation-duration: 30s;
+            box-shadow: 0 0 6px rgba(95, 191, 177, 0.5);
+        }
+
+        .particle:nth-child(4n) {
+            background: rgba(125, 211, 199, 0.6);
+            animation-duration: 18s;
+            box-shadow: 0 0 12px rgba(125, 211, 199, 0.3);
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: var(--particle-opacity, 0.2);
+                transform: translateY(95vh) rotate(18deg) scale(1);
+            }
+            50% {
+                opacity: var(--particle-opacity, 0.3);
+                transform: translateY(50vh) rotate(180deg) scale(1.2);
+            }
+            95% {
+                opacity: var(--particle-opacity, 0.1);
+                transform: translateY(5vh) rotate(342deg) scale(0.8);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(95, 191, 177, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(95, 191, 177, 0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            animation: grid-flow 30s linear infinite;
+        }
+
+        @keyframes grid-flow {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(100px, 100px);
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .float-element {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.1), rgba(95, 191, 177, 0.05));
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: float-around 25s ease-in-out infinite;
+        }
+
+        .float-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .float-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 20%;
+            animation-delay: -8s;
+            animation-duration: 20s;
+        }
+
+        .float-element:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            bottom: 30%;
+            left: 60%;
+            animation-delay: -15s;
+            animation-duration: 30s;
+        }
+
+        @keyframes float-around {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(50px, -30px) scale(1.1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-30px, -60px) scale(0.9);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translate(-60px, 30px) scale(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: var(--space-4xl) var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(15, 20, 25, 0.8) 0%,
+                rgba(15, 20, 25, 0.9) 50%,
+                rgba(15, 20, 25, 0.8) 100%
+            );
+            z-index: -1;
+            backdrop-filter: blur(1px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-4xl);
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: var(--primary-ultra-light);
+            border: 1px solid rgba(95, 191, 177, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-sm) var(--space-lg);
+            margin-bottom: var(--space-lg);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: var(--space-lg);
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--gray-300);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Features Grid - FIXED VERSION FROM WORKING FILE */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-4xl);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(95, 191, 177, 0.2);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-lg);
+            color: var(--gray-900);
+            font-size: 20px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            color: var(--white);
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: var(--gray-300);
+            line-height: 1.6;
+        }
+
+        /* Your Trading Evolution Section */
+        .evolution {
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.02) 0%, rgba(95, 191, 177, 0.01) 100%);
+            border-top: 1px solid rgba(95, 191, 177, 0.08);
+            border-bottom: 1px solid rgba(95, 191, 177, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .evolution-timeline {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--space-2xl);
+            margin-top: var(--space-4xl);
+            position: relative;
+        }
+
+        .evolution-timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                var(--gray-600) 0%, 
+                var(--primary) 50%, 
+                var(--primary-light) 100%
+            );
+            z-index: 1;
+        }
+
+        .evolution-stage {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .evolution-stage:hover {
+            transform: translateY(-12px);
+            border-color: rgba(95, 191, 177, 0.3);
+            box-shadow: 0 20px 60px rgba(95, 191, 177, 0.15);
+        }
+
+        .stage-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--space-lg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stage-icon.before {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: var(--white);
+        }
+
+        .stage-icon.during {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: var(--white);
+        }
+
+        .stage-icon.after {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--gray-900);
+        }
+
+        .stage-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            color: var(--white);
+        }
+
+        .stage-description {
+            font-size: 14px;
+            color: var(--gray-300);
+            line-height: 1.6;
+            margin-bottom: var(--space-lg);
+        }
+
+        .stage-metrics {
+            display: flex;
+            justify-content: space-around;
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .metric-value.negative {
+            color: #ef4444;
+        }
+
+        .metric-value.neutral {
+            color: #f59e0b;
+        }
+
+        .metric-value.positive {
+            color: var(--primary);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Enhanced Platform Section */
+        .platform {
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.02) 0%, rgba(95, 191, 177, 0.01) 100%);
+            border-top: 1px solid rgba(95, 191, 177, 0.08);
+            border-bottom: 1px solid rgba(95, 191, 177, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Interactive Background Layer for Platform */
+        .platform::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(95, 191, 177, 0.03) 0%, transparent 50%),
+                radial-gradient(400px circle at calc(var(--mouse-x, 50%) + 200px) calc(var(--mouse-y, 50%) - 100px), rgba(95, 191, 177, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Dynamic Particles for Platform */
+        .platform-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .platform-particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-platform-particle 15s linear infinite;
+            animation-fill-mode: forwards;
+            pointer-events: none;
+        }
+
+        @keyframes float-platform-particle {
+            0% {
+                transform: translateY(100%) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+                transform: translateY(90%) scale(1);
+            }
+            90% {
+                opacity: 0.1;
+                transform: translateY(-10%) scale(0.5);
+            }
+            100% {
+                transform: translateY(-30%) scale(0);
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* Cursor Glow Effect */
+        .cursor-glow {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(95, 191, 177, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: all 0.1s ease;
+            z-index: 2;
+            mix-blend-mode: screen;
+            opacity: 0;
+        }
+
+        .platform-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--space-4xl);
+            align-items: center;
+        }
+
+        .platform-content {
+            z-index: 2;
+        }
+
+        .platform-features {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+        }
+
+        .platform-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+        }
+
+        .platform-feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-900);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .platform-feature-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: var(--space-sm);
+        }
+
+        .platform-feature-content p {
+            font-size: 14px;
+            color: var(--gray-300);
+            line-height: 1.6;
+        }
+
+        .platform-demo {
+            position: relative;
+            z-index: 2;
+        }
+
+        .demo-tabs {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: var(--space-sm);
+            transition: all 0.3s ease;
+        }
+
+        .demo-tabs:hover {
+            border-color: rgba(95, 191, 177, 0.2);
+            box-shadow: 0 8px 32px rgba(95, 191, 177, 0.1);
+        }
+
+        .demo-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--gray-400);
+            font-size: 13px;
+            font-weight: 500;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .demo-tab.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+
+        .demo-tab:hover:not(.active) {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-strong);
+            transition: all 0.4s ease;
+        }
+
+        .dashboard-container:hover {
+            border-color: rgba(95, 191, 177, 0.2);
+            box-shadow: 0 20px 60px rgba(95, 191, 177, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .dashboard-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: var(--space-xl);
+            overflow-y: auto;
+            visibility: hidden;
+        }
+
+        .dashboard-view.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .market-commentary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .market-commentary:hover {
+            border-color: rgba(95, 191, 177, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .market-mood {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+        }
+
+        .mood-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .mood-indicator.positive {
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+        }
+
+        .mood-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: var(--space-sm);
+        }
+
+        .mood-description {
+            font-size: 13px;
+            color: var(--gray-300);
+            line-height: 1.5;
+        }
+
+        .live-commentary {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            transition: all 0.3s ease;
+        }
+
+        .commentary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .commentary-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .commentary-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .commentary-item {
+            display: flex;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+            padding: var(--space-sm) 0;
+            transition: all 0.3s ease;
+            border-radius: var(--radius-md);
+        }
+
+        .commentary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .commentary-item:hover {
+            background: rgba(95, 191, 177, 0.05);
+            padding-left: var(--space-md);
+            transform: translateX(5px);
+        }
+
+        .commentary-time {
+            font-size: 11px;
+            color: var(--gray-400);
+            font-weight: 500;
+            min-width: 80px;
+            margin-top: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .commentary-item:hover .commentary-time {
+            color: var(--primary);
+        }
+
+        .commentary-text {
+            font-size: 13px;
+            color: var(--gray-300);
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .commentary-item:hover .commentary-text {
+            color: var(--white);
+        }
+
+        /* Trading Confessions Section */
+        .confessions {
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.03) 0%, rgba(95, 191, 177, 0.01) 100%);
+            border-top: 1px solid rgba(95, 191, 177, 0.08);
+            border-bottom: 1px solid rgba(95, 191, 177, 0.08);
+        }
+
+        .confessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-4xl);
+        }
+
+        .confession-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            padding-top: calc(var(--space-xl) + 24px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confession-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(95, 191, 177, 0.2);
+            box-shadow: 0 20px 60px rgba(95, 191, 177, 0.15);
+        }
+
+        .confession-quote {
+            font-size: 16px;
+            color: var(--white);
+            line-height: 1.6;
+            margin-bottom: var(--space-xl);
+            position: relative;
+            font-style: italic;
+            padding-left: 20px;
+            z-index: 2;
+        }
+
+        .confession-quote::before {
+            content: '"';
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--primary);
+            position: absolute;
+            top: -25px;
+            left: -8px;
+            font-family: 'Space Grotesk', serif;
+            opacity: 0.15;
+            line-height: 1;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(0.5px);
+        }
+
+        .confession-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-900);
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .author-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .author-info p {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        .confession-impact {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .impact-metric {
+            text-align: center;
+        }
+
+        .impact-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .impact-label {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .confession-tag {
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.15), rgba(95, 191, 177, 0.08));
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(95, 191, 177, 0.2);
+            color: var(--primary-light);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            z-index: 3;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(95, 191, 177, 0.1);
+        }
+
+        .confession-tag:hover {
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.25), rgba(95, 191, 177, 0.15));
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(95, 191, 177, 0.2);
+        }
+
+        .waitlist {
+            background: linear-gradient(135deg, rgba(95, 191, 177, 0.05) 0%, rgba(95, 191, 177, 0.02) 100%);
+            border-top: 1px solid rgba(95, 191, 177, 0.1);
+        }
+
+        .waitlist-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            color: var(--white);
+            font-size: 14px;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(95, 191, 177, 0.1);
+        }
+
+        .email-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: var(--space-3xl) var(--space-lg) var(--space-lg);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--space-xl);
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .platform-container {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+            
+            .dashboard-container {
+                height: 400px;
+            }
+
+            .evolution-timeline {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+
+            .evolution-timeline::before {
+                display: none;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: var(--space-md);
+            }
+
+            .modal-body {
+                padding: var(--space-md) var(--space-lg) var(--space-lg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                top: var(--space-sm);
+                width: calc(100% - var(--space-lg));
+                padding: 8px var(--space-md);
+            }
+
+            .nav-content {
+                height: 36px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-cta {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: var(--space-xl);
+            }
+
+            .hero-actions {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dashboard-preview {
+                height: 400px;
+            }
+
+            .card-main {
+                width: 280px;
+                height: 220px;
+            }
+
+            .card-secondary {
+                width: 220px;
+                height: 160px;
+            }
+
+            .card-accent {
+                width: 160px;
+                height: 110px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg);
+            }
+
+            .demo-tabs {
+                flex-direction: column;
+            }
+            
+            .dashboard-container {
+                height: 350px;
+            }
+
+            .confessions-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg);
+            }
+
+            .waitlist-form {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: var(--space-lg);
+                text-align: center;
+            }
+
+            .modal-header {
+                padding: var(--space-lg) var(--space-lg) var(--space-md);
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+        }
+
+        /* Smooth scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile menu toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 3px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: rgba(95, 191, 177, 0.1);
+        }
+
+        .mobile-menu-toggle span {
+            width: 16px;
+            height: 1.5px;
+            background: var(--white);
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle:hover span {
+            background: var(--primary-light);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+        }
+    </style>
 </head>
-<body>
-    <!-- Loading Screen -->
-    <div class="loading-screen">
+<body class="loading">
+    <!-- Sophisticated Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
-            <div class="loading-logo">B</div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
+            <div class="loading-indicator">
+                <span class="loading-text">Loading Experience</span>
+                <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="loading-progress">
+            <div class="loading-progress-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Dynamic Background -->
+    <div class="dynamic-bg">
+        <div class="bg-grid"></div>
+        <div class="bg-particles" id="particles"></div>
+        <div class="floating-elements">
+            <div class="float-element"></div>
+            <div class="float-element"></div>
+            <div class="float-element"></div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal-overlay" id="privacyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Privacy Policy</h2>
+                <button class="modal-close" onclick="closeModal('privacyModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p>At Breefly, your privacy is important to us. This policy explains how we collect, use, and protect your information when you use our trading companion tool.</p>
+                
+                <h3>What We Collect:</h3>
+                <ul>
+                    <li><strong>Personal info:</strong> like your name, email, and any data you choose to enter (such as portfolio info).</li>
+                    <li><strong>Usage data:</strong> like IP address, browser type, and interactions with our site.</li>
+                    <li><strong>AI queries:</strong> we may retain anonymized insights from your queries to improve our product, but we don't use them to track or profile you.</li>
+                </ul>
+
+                <h3>How We Use Your Info:</h3>
+                <ul>
+                    <li>To run and improve the service</li>
+                    <li>To respond to your questions</li>
+                    <li>To ensure security and prevent abuse</li>
+                    <li>To analyze usage patterns (anonymized)</li>
+                    <li>To comply with laws if necessary</li>
+                </ul>
+
+                <h3>Your Rights:</h3>
+                <p>You can ask us to:</p>
+                <ul>
+                    <li>Show you what data we have</li>
+                    <li>Fix it</li>
+                    <li>Delete it</li>
+                    <li>Stop using it</li>
+                </ul>
+                <p>Just reach out at <a href="mailto:Amit@breefly.ai">Amit@breefly.ai</a>.</p>
+
+                <h3>Data Security:</h3>
+                <p>We use encryption, access controls, and regular audits to protect your information.</p>
+
+                <h3>Sharing:</h3>
+                <p>We don't sell your personal data. We may share it with trusted providers (like hosting or analytics) under strict confidentiality. We comply with GDPR, Israeli PPL, and U.S. laws where applicable.</p>
+
+                <h3>Cookies:</h3>
+                <p>We use cookies for functionality and analytics. You'll see a cookie banner where you can choose your preferences.</p>
+
+                <h3>Children:</h3>
+                <p>This service is not for users under 13. We do not knowingly collect their data.</p>
+
+                <h3>Updates:</h3>
+                <p>We may update this policy. Major changes will be clearly communicated.</p>
+
+                <p><strong>Contact us:</strong><br>
+                Breefly<br>
+                <a href="mailto:Amit@breefly.ai">Amit@breefly.ai</a></p>
             </div>
         </div>
     </div>
 
-    <!-- Background Elements -->
-    <div class="background-container">
-        <div class="background-grid"></div>
-        <div class="floating-orb orb-1"></div>
-        <div class="floating-orb orb-2"></div>
-        <div class="floating-orb orb-3"></div>
+    <!-- Terms & Conditions Modal -->
+    <div class="modal-overlay" id="termsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Terms & Conditions</h2>
+                <button class="modal-close" onclick="closeModal('termsModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p>By using Breefly, you agree to the following:</p>
+
+                <h3>1. What We Offer:</h3>
+                <p>Breefly is a <strong>trading companion tool</strong> designed to support your research with insights, data, and AI-powered analysis. It does <strong>not offer financial advice</strong>.</p>
+
+                <h3>2. No Financial Advice:</h3>
+                <p>We are <strong>not financial advisors</strong>. Breefly does not recommend buying or selling securities. All information is for <strong>educational and research purposes only</strong>. Use it at your own discretion, and always consult a licensed professional before making investment decisions.</p>
+
+                <h3>3. User Responsibilities:</h3>
+                <ul>
+                    <li>You agree not to misuse the service.</li>
+                    <li>You're responsible for any data you input.</li>
+                    <li>You won't try to hack, scrape, or reverse-engineer our platform.</li>
+                </ul>
+
+                <h3>4. Accounts (if applicable):</h3>
+                <p>You are responsible for keeping your login credentials secure. We can suspend accounts if misuse is detected.</p>
+
+                <h3>5. Intellectual Property:</h3>
+                <p>All site content and tools belong to Breefly. You can't copy or redistribute anything without our permission.</p>
+
+                <h3>6. Third-Party Services:</h3>
+                <p>We may link to or use data from other platforms (e.g., news, APIs). We're not responsible for their content or practices.</p>
+
+                <h3>7. Limitations:</h3>
+                <p>We do our best to keep Breefly accurate and available, but we're not liable for:</p>
+                <ul>
+                    <li>Loss of data</li>
+                    <li>Financial losses</li>
+                    <li>Service interruptions</li>
+                </ul>
+
+                <h3>8. Legal:</h3>
+                <p>These terms are governed by the laws of <strong>Israel</strong>, and any disputes will be handled in courts located in <strong>Tel Aviv-Jaffa</strong>.</p>
+
+                <p><strong>Contact us:</strong><br>
+                Breefly<br>
+                <a href="mailto:Amit@breefly.ai">Amit@breefly.ai</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Get in Touch</h2>
+                <button class="modal-close" onclick="closeModal('contactModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <h4>Contact Information</h4>
+                    <p><strong>Email:</strong> <a href="mailto:Amit@breefly.ai">Amit@breefly.ai</a></p>
+                    <p><strong>Company:</strong> Breefly</p>
+                    <p>We'd love to hear from you! Whether you have questions, feedback, or just want to say hello, don't hesitate to reach out.</p>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label class="form-label" for="contactName">Name</label>
+                        <input type="text" id="contactName" class="form-input" placeholder="Your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" class="form-input" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactSubject">Subject</label>
+                        <input type="text" id="contactSubject" class="form-input" placeholder="What's this about?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactMessage">Message</label>
+                        <textarea id="contactMessage" class="form-textarea" placeholder="Tell us what's on your mind..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">Send Message</button>
+                    <div id="contactFormMessage"></div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- Navigation -->
-<nav class="main-nav">
-    <div class="container">
-        <a href="#" class="nav-brand">Breefly</a>
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#testimonials">Testimonials</a>
+    <nav class="nav" id="nav">
+        <div class="nav-content">
+            <a href="#" class="logo">Breefly</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#evolution">Your Journey</a>
+                <a href="#platform">Platform</a>
+                <a href="#confessions">Stories</a>
+                <a href="#waitlist">Early Access</a>
+            </div>
+            <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <a href="#waitlist" class="nav-cta">Join Waitlist</a>
-        <button class="mobile-menu-toggle" aria-label="Toggle Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </div>
-</nav>
+    </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
+    <section class="hero">
+        <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-tag">AI-POWERED TRADING COMPANION</div>
+                <div class="hero-badge">
+                    Your AI Trading Companion
+                </div>
                 <h1 class="hero-title">
-                    From <span class="text-highlight">overwhelmed</span>
-                    to <span class="text-highlight">overpowered</span>
+                    From overwhelmed<br>
+                    to <span style="color: var(--primary);">overpowered</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Breefly gathers, analyzes, and distills all relevant financial and stock news
-                    for your portfolio and needs. Stay ahead with real-time insights tailored to your trading style.
+                    Your AI trading companion that actually gets you. We turn market chaos into clarity, 
+                    delivering macro-to-micro insights with just the right amount of wit.
                 </p>
-                <div class="hero-cta">
-                    <a href="#waitlist" class="primary-button">Get Early Access</a>
-                    <a href="#how-it-works" class="secondary-button">See How It Works</a>
+                <div class="hero-actions">
+                    <a href="#waitlist" class="btn-primary">Get Early Access</a>
+                    <a href="#features" class="btn-secondary">
+                        Discover Features
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="hero-image-container">
-                    <div class="dashboard-preview">
-                        <div class="dashboard-card card-1">
-                            <div class="card-header"></div>
-                            <div class="card-content"></div>
+                <div class="dashboard-preview">
+                    <div class="dashboard-card card-main">
+                        <div class="card-header">
+                            <div class="card-dot"></div>
+                            <div class="card-dot"></div>
+                            <div class="card-dot"></div>
                         </div>
-                        <div class="dashboard-card card-2">
-                            <div class="card-header"></div>
-                            <div class="card-content"></div>
+                        <div class="card-content">
+                            <div class="chart-line" style="width: 80%;"></div>
+                            <div class="chart-line" style="width: 60%; animation-delay: 0.5s;"></div>
+                            <div class="chart-line" style="width: 90%; animation-delay: 1s;"></div>
+                            <div class="chart-line" style="width: 70%; animation-delay: 1.5s;"></div>
                         </div>
-                        <div class="dashboard-notification">
-                            <div class="notification-icon"></div>
-                            <div class="notification-content"></div>
+                    </div>
+                    <div class="dashboard-card card-secondary">
+                        <div class="card-header">
+                            <div class="card-dot"></div>
+                            <div class="card-dot"></div>
+                            <div class="card-dot"></div>
+                        </div>
+                        <div class="card-content">
+                            <div class="chart-line" style="width: 70%;"></div>
+                            <div class="chart-line" style="width: 85%; animation-delay: 0.8s;"></div>
+                            <div class="chart-line" style="width: 50%; animation-delay: 1.3s;"></div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card card-accent">
+                        <div class="card-header">
+                            <div class="card-dot"></div>
+                            <div class="card-dot"></div>
+                            <div class="card-dot"></div>
+                        </div>
+                        <div class="card-content">
+                            <div class="chart-line" style="width: 95%;"></div>
+                            <div class="chart-line" style="width: 75%; animation-delay: 0.7s;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse-icon"></div>
-            <span>Scroll to discover</span>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="features-section">
+    <section class="section" id="features">
         <div class="container">
-            <div class="section-header">
-                <h2>Key <span class="text-highlight">Features</span></h2>
-                <p>Experience the future of trading with Breefly's powerful tools</p>
+            <div class="section-header fade-in">
+                <div class="section-badge">Your Trading Sidekick</div>
+                <h2 class="section-title">Market chaos? <span style="color: var(--primary);">We got you.</span></h2>
+                <p class="section-subtitle">
+                    We're the friend who actually reads all the market news, connects the dots, 
+                    and tells you what matters to YOUR portfolio. Think less, trade smarter.
+                </p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
                         </svg>
                     </div>
-                    <h3>Real-Time Insights</h3>
-                    <p>Stay ahead with instant market updates and analysis tailored to your portfolio</p>
+                    <h3 class="feature-title">Always-On Market Radar</h3>
+                    <p class="feature-description">
+                        We're watching the markets so you don't have to. Think of us as your caffeinated friend 
+                        who never sleeps and actually reads the fine print.
+                    </p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                            <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                            <path d="M13 12h3l2 2-2 2h-3"/>
+                            <path d="M11 12H8l-2 2 2 2h3"/>
                         </svg>
                     </div>
-                    <h3>Proactive Guidance</h3>
-                    <p>Receive smart recommendations based on your trading style and goals</p>
+                    <h3 class="feature-title">Gets Smarter About You</h3>
+                    <p class="feature-description">
+                        The more we hang out, the better we get at predicting what you'll want to know 
+                        before you even ask. It's not creepy, it's helpful.
+                    </p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 16V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M8 16V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 16V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M3 8H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M5 3H19C20.1046 3 21 3.89543 21 5V16C21 17.1046 20.1046 18 19 18H5C3.89543 18 3 17.1046 3 16V5C3 3.89543 3.89543 3 5 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
                         </svg>
                     </div>
-                    <h3>Adaptive Learning</h3>
-                    <p>Our platform evolves based on your interactions to deliver better results</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>Portfolio Optimization</h3>
-                    <p>Identify areas for improvement and optimize your portfolio for better performance</p>
+                    <h3 class="feature-title">Macro-to-Micro Insights</h3>
+                    <p class="feature-description">
+                        We translate global market chaos into personal portfolio clarity. 
+                        What happens in the world, and what it means for YOUR trades.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works-section">
+    <!-- Your Trading Evolution Section -->
+    <section class="section evolution" id="evolution">
         <div class="container">
-            <div class="section-header">
-                <h2>How <span class="text-highlight">It Works</span></h2>
-                <p>Getting started with Breefly is simple</p>
+            <div class="section-header fade-in">
+                <div class="section-badge">Your Trading Evolution</div>
+                <h2 class="section-title">From panic mode to <span style="color: var(--primary);">profit mode</span></h2>
+                <p class="section-subtitle">
+                    Watch your trading game transform from chaotic fumbling to confident precision. 
+                    It's like having a trading coach who actually has a sense of humor.
+                </p>
             </div>
-            <div class="steps-container">
-                <div class="step-item">
-                    <div class="step-number">01</div>
-                    <h3>Connect</h3>
-                    <p>Link your trading accounts and set your preferences</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">02</div>
-                    <h3>Analyze</h3>
-                    <p>Our AI analyzes market data and your portfolio</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">03</div>
-                    <h3>Trade</h3>
-                    <p>Make informed decisions with real-time insights</p>
-                </div>
-            </div>
-            <div class="demo-container">
-                <div class="demo-tabs">
-                    <button class="demo-tab active" data-tab="connect">Connect</button>
-                    <button class="demo-tab" data-tab="analyze">Analyze</button>
-                    <button class="demo-tab" data-tab="trade">Trade</button>
-                </div>
-                <div class="demo-content">
-                    <div class="demo-panel active" id="connect-panel">
-                        <div class="demo-visual connect-visual"></div>
-                        <div class="demo-text">
-                            <h4>Connect Your Accounts</h4>
-                            <p>Securely link your trading accounts through our simple interface. Set your preferences and trading goals to personalize your experience.</p>
-                            <ul class="demo-features">
-                                <li>Secure OAuth integration</li>
-                                <li>Custom preferences setup</li>
-                                <li>Trading goals definition</li>
-                            </ul>
+            
+            <div class="evolution-timeline fade-in">
+                <div class="evolution-stage">
+                    <div class="stage-icon before">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="stage-title">Day 1: The Struggle</h3>
+                    <p class="stage-description">
+                        Frantically refreshing 12 different apps, drowning in financial news, 
+                        making trades based on vibes and panic. Your portfolio looks like a roller coaster designed by chaos.
+                    </p>
+                    <div class="stage-metrics">
+                        <div class="metric">
+                            <div class="metric-value negative">-15%</div>
+                            <div class="metric-label">Portfolio</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value negative">4 hrs</div>
+                            <div class="metric-label">Daily Stress</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value negative">12</div>
+                            <div class="metric-label">Apps Open</div>
                         </div>
                     </div>
-                    <div class="demo-panel" id="analyze-panel">
-                        <div class="demo-visual analyze-visual"></div>
-                        <div class="demo-text">
-                            <h4>AI-Powered Analysis</h4>
-                            <p>Our advanced AI analyzes market data, news, and your portfolio to generate personalized insights and recommendations.</p>
-                            <ul class="demo-features">
-                                <li>Real-time market analysis</li>
-                                <li>News sentiment evaluation</li>
-                                <li>Portfolio performance tracking</li>
-                            </ul>
+                </div>
+
+                <div class="evolution-stage">
+                    <div class="stage-icon during">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                            <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                            <path d="M13 12h3l2 2-2 2h-3"/>
+                            <path d="M11 12H8l-2 2 2 2h3"/>
+                        </svg>
+                    </div>
+                    <h3 class="stage-title">Day 30: Getting Wise</h3>
+                    <p class="stage-description">
+                        Breefly's been filtering the noise, teaching you patterns, and occasionally roasting your 
+                        FOMO decisions. You're starting to see the method behind the market madness.
+                    </p>
+                    <div class="stage-metrics">
+                        <div class="metric">
+                            <div class="metric-value neutral">+8%</div>
+                            <div class="metric-label">Portfolio</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value neutral">1 hr</div>
+                            <div class="metric-label">Daily Focus</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value neutral">3</div>
+                            <div class="metric-label">Smart Moves</div>
                         </div>
                     </div>
-                    <div class="demo-panel" id="trade-panel">
-                        <div class="demo-visual trade-visual"></div>
-                        <div class="demo-text">
-                            <h4>Make Informed Trades</h4>
-                            <p>Receive actionable insights and recommendations to make informed trading decisions that align with your goals.</p>
-                            <ul class="demo-features">
-                                <li>Entry and exit suggestions</li>
-                                <li>Risk assessment</li>
-                                <li>Performance tracking</li>
-                            </ul>
+                </div>
+
+                <div class="evolution-stage">
+                    <div class="stage-icon after">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="stage-title">Day 100: The Pro</h3>
+                    <p class="stage-description">
+                        You're calm, collected, and crushing it. Breefly whispers market secrets in your ear, 
+                        and you make moves that would make Warren Buffett nod approvingly.
+                    </p>
+                    <div class="stage-metrics">
+                        <div class="metric">
+                            <div class="metric-value positive">+24%</div>
+                            <div class="metric-label">Portfolio</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value positive">15 min</div>
+                            <div class="metric-label">Daily Check</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value positive">∞</div>
+                            <div class="metric-label">Confidence</div>
                         </div>
                     </div>
                 </div>
@@ -226,167 +2454,989 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section">
+    <!-- Enhanced Platform Section -->
+    <section class="section platform" id="platform">
+        <!-- Dynamic Particles -->
+        <div class="platform-particles" id="platformParticles"></div>
+        
+        <!-- Cursor Glow -->
+        <div class="cursor-glow" id="cursorGlow"></div>
+        
         <div class="container">
-            <div class="section-header">
-                <h2>What <span class="text-highlight">Traders Say</span></h2>
-                <p>Hear from our early access users</p>
+            <div class="section-header fade-in">
+                <div class="section-badge">Meet Your Trading Sidekick</div>
+                <h2 class="section-title">Where market chaos becomes your <span style="color: var(--primary);">playground</span></h2>
+                <p class="section-subtitle">
+                    This is your command center for turning financial noise into winning moves. 
+                    Smart, fast, and surprisingly fun to use.
+                </p>
             </div>
-            <div class="testimonials-stats">
-                <div class="stat-item">
-                    <div class="stat-value"><span class="counter" data-target="87">0</span>%</div>
-                    <div class="stat-label">improved trading decisions</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value"><span class="counter" data-target="25">0</span>%</div>
-                    <div class="stat-label">time saved on research</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value"><span class="counter" data-target="92">0</span>%</div>
-                    <div class="stat-label">satisfaction rate</div>
-                </div>
-            </div>
-            <div class="testimonials-slider">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Breefly has completely transformed how I approach trading. The AI-powered insights have given me an edge I never had before."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar"></div>
-                        <div class="author-info">
-                            <h4>Alex Martin</h4>
-                            <p>Day Trader</p>
+            
+            <div class="platform-container fade-in">
+                <div class="platform-content">
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <div class="platform-feature-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="platform-feature-content">
+                                <h4>Market Translator</h4>
+                                <p>Big, scary financial news? We break it down into action steps in milliseconds. No PhD required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="platform-feature">
+                            <div class="platform-feature-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                    <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                </svg>
+                            </div>
+                            <div class="platform-feature-content">
+                                <h4>Portfolio Whisperer</h4>
+                                <p>We know your portfolio inside out and spot opportunities tailored just for you. It's not stalking, it's strategy.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="platform-feature">
+                            <div class="platform-feature-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                </svg>
+                            </div>
+                            <div class="platform-feature-content">
+                                <h4>Your Trading Radar</h4>
+                                <p>Instant heads-ups on market-moving news. We only buzz you when it actually matters to your money.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"The real-time analysis and notifications have helped me catch opportunities I would have otherwise missed. Game changer!"</p>
+                
+                <div class="platform-demo">
+                    <div class="demo-tabs">
+                        <button class="demo-tab active" data-view="pulse">Market Pulse</button>
+                        <button class="demo-tab" data-view="portfolio">Portfolio Lens</button>
+                        <button class="demo-tab" data-view="insights">Insight Feed</button>
+                        <button class="demo-tab" data-view="alerts">Alert Center</button>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar"></div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>Swing Trader</p>
+                    
+                    <div class="dashboard-container" id="dashboardContainer">
+                        <!-- Market Pulse View -->
+                        <div class="dashboard-view active" id="pulse-view">
+                            <div class="market-commentary">
+                                <div class="market-mood">
+                                    <div class="mood-indicator positive"></div>
+                                    <div>
+                                        <div class="mood-title">Markets feeling optimistic (finally)</div>
+                                        <div class="mood-description">
+                                            Fed's playing nice, earnings are crushing it, and your portfolio is basically strutting around like it owns the place. 
+                                            Tech's on fire, but don't get too cocky - we're watching for any drama.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="live-commentary">
+                                <div class="commentary-header">
+                                    <div class="commentary-title">Live Market Commentary</div>
+                                    <div class="commentary-status">
+                                        <div class="status-dot"></div>
+                                        Streaming
+                                    </div>
+                                </div>
+                                <div class="commentary-item">
+                                    <div class="commentary-time">2:31 PM</div>
+                                    <div class="commentary-text">NVDA just broke through resistance like it's made of paper. Your AI play looking smart right about now.</div>
+                                </div>
+                                <div class="commentary-item">
+                                    <div class="commentary-time">2:18 PM</div>
+                                    <div class="commentary-text">Bond yields dropping faster than your last bad trade idea. Fixed income suddenly interesting again.</div>
+                                </div>
+                                <div class="commentary-item">
+                                    <div class="commentary-time">1:47 PM</div>
+                                    <div class="commentary-text">Oil's having an identity crisis. OPEC meeting tomorrow - buckle up for some volatility theater.</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"As a busy professional, I don't have time to constantly monitor the markets. Breefly keeps me informed and helps me make better decisions."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar"></div>
-                        <div class="author-info">
-                            <h4>Michael Johnson</h4>
-                            <p>Passive Investor</p>
+                        
+                        <!-- Portfolio Lens View -->
+                        <div class="dashboard-view" id="portfolio-view">
+                            <div class="live-commentary">
+                                <div class="commentary-header">
+                                    <div class="commentary-title">Your Portfolio Reality Check</div>
+                                    <div class="commentary-status">
+                                        <div class="status-dot"></div>
+                                        $247,830 • +3.21% Today
+                                    </div>
+                                </div>
+                                
+                                <div class="commentary-item">
+                                    <div class="commentary-time">MOOD CHECK</div>
+                                    <div class="commentary-text">Your portfolio is having a moment. Up 3.2% today because apparently you're some kind of genius. NVDA's doing the heavy lifting while your diversification game keeps things steady.</div>
+                                </div>
+
+                                <div class="commentary-item">
+                                    <div class="commentary-time">THE NUMBERS</div>
+                                    <div class="commentary-text">Risk level: 6.2/10 (Goldilocks zone) • Diversification: 8.5/10 (Chef's kiss) • Not bad for someone who probably picked half these stocks because you liked their logos.</div>
+                                </div>
+                                
+                                <div class="commentary-item">
+                                    <div class="commentary-time">TOP PERFORMER</div>
+                                    <div class="commentary-text">NVIDIA (+7.84%) is basically carrying your portfolio on its back. Maybe send Jensen a thank you card?</div>
+                                </div>
+                                
+                                <div class="commentary-item">
+                                    <div class="commentary-time">HEADS UP</div>
+                                    <div class="commentary-text">Your Apple position is looking a bit lonely at 15% allocation. Might be time to show it some love or trim it down.</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Insight Feed View -->
+                        <div class="dashboard-view" id="insights-view">
+                            <div class="live-commentary">
+                                <div class="commentary-header">
+                                    <div class="commentary-title">Today's Trading Insights</div>
+                                    <div class="commentary-status">
+                                        <div class="status-dot"></div>
+                                        7 New Insights
+                                    </div>
+                                </div>
+                                
+                                <div class="commentary-item">
+                                    <div class="commentary-time">BREAKING</div>
+                                    <div class="commentary-text">CPI data came in cooler than expected. Your bond plays just got a nice little boost while inflation hawks are reconsidering their life choices.</div>
+                                </div>
+
+                                <div class="commentary-item">
+                                    <div class="commentary-time">SECTOR WATCH</div>
+                                    <div class="commentary-text">Healthcare's been quietly climbing while everyone's obsessing over AI. Maybe it's time to give boring old pharma some love?</div>
+                                </div>
+                                
+                                <div class="commentary-item">
+                                    <div class="commentary-time">EARNINGS ALERT</div>
+                                    <div class="commentary-text">Microsoft guidance was chef's kiss perfect. Cloud growth still firing on all cylinders, and your tech allocation is looking pretty smug right now.</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alert Center View -->
+                        <div class="dashboard-view" id="alerts-view">
+                            <div class="live-commentary">
+                                <div class="commentary-header">
+                                    <div class="commentary-title">Your Personal Alert Center</div>
+                                    <div class="commentary-status">
+                                        <div class="status-dot"></div>
+                                        3 Active Alerts
+                                    </div>
+                                </div>
+                                
+                                <div class="commentary-item">
+                                    <div class="commentary-time">URGENT</div>
+                                    <div class="commentary-text">Tesla's having a moment (not the good kind). Down 4% on production concerns. Your stop-loss at $185 just saved your bacon. You're welcome.</div>
+                                </div>
+
+                                <div class="commentary-item">
+                                    <div class="commentary-time">OPPORTUNITY</div>
+                                    <div class="commentary-text">Microsoft dip = shopping opportunity. Down 2.5% on profit-taking but fundamentals are rock solid. Perfect timing for your tech accumulation strategy.</div>
+                                </div>
+                                
+                                <div class="commentary-item">
+                                    <div class="commentary-time">DIVIDEND DROP</div>
+                                    <div class="commentary-text">J&J dividend hitting your account tomorrow ($2,340). Because who doesn't love free money? Time to reinvest or treat yourself to something nice?</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="testimonials-nav">
-                <button class="prev-testimonial" aria-label="Previous testimonial">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <div class="testimonials-dots">
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
+        </div>
+    </section>
+
+    <!-- Trading Confessions Section -->
+    <section class="section confessions" id="confessions">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-badge">Trading Confessions</div>
+                <h2 class="section-title">Real stories from traders who <span style="color: var(--primary);">found their edge</span></h2>
+                <p class="section-subtitle">
+                    No sugar-coating, no BS. Just honest confessions from traders who discovered 
+                    what it's like to have a sidekick who actually has their back.
+                </p>
+            </div>
+            
+            <div class="confessions-grid">
+                <div class="confession-card fade-in">
+                    <div class="confession-tag">Software Engineer</div>
+                    <div class="confession-quote">
+                        Used to spend my lunch breaks frantically checking 12 different apps, making trades based on pure anxiety. 
+                        Now Breefly whispers the smart moves in my ear, and I actually have time to eat lunch. 
+                        My coworkers think I found zen. Close enough.
+                    </div>
+                    <div class="confession-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>Marcus Chen</h4>
+                            <p>Senior Software Engineer</p>
+                        </div>
+                    </div>
+                    <div class="confession-impact">
+                        <div class="impact-metric">
+                            <div class="impact-value">+18%</div>
+                            <div class="impact-label">Portfolio Growth</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">-3hrs</div>
+                            <div class="impact-label">Daily Stress</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">∞</div>
+                            <div class="impact-label">Peace of Mind</div>
+                        </div>
+                    </div>
                 </div>
-                <button class="next-testimonial" aria-label="Next testimonial">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+
+                <div class="confession-card fade-in">
+                    <div class="confession-tag">English Teacher</div>
+                    <div class="confession-quote">
+                        Between grading papers and lesson planning, I barely had time to think about my investments. 
+                        Breefly became my financial homework buddy - explaining everything like I'm teaching my students. 
+                        Now I'm the one dropping market knowledge in the faculty lounge.
+                    </div>
+                    <div class="confession-author">
+                        <div class="author-avatar">J</div>
+                        <div class="author-info">
+                            <h4>Jordan Kim</h4>
+                            <p>High School English Teacher</p>
+                        </div>
+                    </div>
+                    <div class="confession-impact">
+                        <div class="impact-metric">
+                            <div class="impact-value">+24%</div>
+                            <div class="impact-label">Annual Return</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">5 min</div>
+                            <div class="impact-label">Daily Check-in</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">∞</div>
+                            <div class="impact-label">Faculty Respect</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="confession-card fade-in">
+                    <div class="confession-tag">Marketing Manager</div>
+                    <div class="confession-quote">
+                        Started investing with my bonus money and immediately fell into every FOMO trap imaginable. 
+                        Breefly saved me from myself - and from buying GameStop at $400. Six months later, I'm up 
+                        15% and finally understand what 'buy the dip' actually means.
+                    </div>
+                    <div class="confession-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <h4>Sarah Williams</h4>
+                            <p>Marketing Manager</p>
+                        </div>
+                    </div>
+                    <div class="confession-impact">
+                        <div class="impact-metric">
+                            <div class="impact-value">+15%</div>
+                            <div class="impact-label">First Year</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">0</div>
+                            <div class="impact-label">Panic Sells</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">100%</div>
+                            <div class="impact-label">Confidence</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="confession-card fade-in">
+                    <div class="confession-tag">Emergency Nurse</div>
+                    <div class="confession-quote">
+                        Working 12-hour shifts, I barely had energy to check my retirement account, let alone trade. 
+                        Breefly fits into my crazy schedule - quick insights between patients, smart alerts during breaks. 
+                        My portfolio is finally growing faster than my stress levels.
+                    </div>
+                    <div class="confession-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Alex Rodriguez</h4>
+                            <p>Emergency Room Nurse</p>
+                        </div>
+                    </div>
+                    <div class="confession-impact">
+                        <div class="impact-metric">
+                            <div class="impact-value">+12%</div>
+                            <div class="impact-label">Net Returns</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">2 min</div>
+                            <div class="impact-label">Daily Time</div>
+                        </div>
+                        <div class="impact-metric">
+                            <div class="impact-value">∞</div>
+                            <div class="impact-label">Gratitude</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Waitlist Section -->
-    <section id="waitlist" class="waitlist-section">
+    <section class="section waitlist" id="waitlist">
         <div class="container">
-            <div class="waitlist-content">
-                <h2>Join the <span class="text-highlight">Waitlist</span></h2>
-                <p>Be among the first to experience the future of AI-powered trading</p>
-                <form id="waitlistForm" class="waitlist-form">
-                    <div class="form-group">
-                        <input type="email" id="email" placeholder="Your email address" required>
-                        <button type="submit" class="primary-button">Get Early Access</button>
-                    </div>
-                    <div class="form-message" id="formMessage"></div>
+            <div class="waitlist-content fade-in">
+                <div class="section-badge">Early Access</div>
+                <h2 class="section-title">Ready to crush it?</h2>
+                <p class="section-subtitle">
+                    Join the traders who've discovered that market analysis doesn't have to be boring. 
+                    Warning: may cause sudden confidence and better decisions.
+                </p>
+                <form class="waitlist-form" id="waitlistForm">
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        placeholder="Enter your email address"
+                        required
+                        id="email"
+                    >
+                    <button type="submit" class="btn-primary">
+                        Reserve Access
+                    </button>
                 </form>
-                <p class="privacy-note">By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
-            </div>
-            <div class="waitlist-visual">
-                <div class="notification">
-                    <div class="notification-icon">🚀</div>
-                    <div class="notification-content">
-                        <h4>Launch Coming Soon</h4>
-                        <p>We're onboarding users in batches</p>
-                    </div>
-                </div>
+                <div class="form-message" id="formMessage"></div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="main-footer">
+    <footer class="footer">
         <div class="container">
-            <div class="footer-top">
-                <div class="footer-logo">Breefly<span class="logo-dot">.</span>ai</div>
-                <div class="footer-social">
-                    <a href="https://twitter.com/BreeflyAI" target="_blank" aria-label="Twitter">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M23 3.00005C22.0424 3.67552 20.9821 4.19216 19.86 4.53005C19.2577 3.83756 18.4573 3.34674 17.567 3.12397C16.6767 2.90121 15.7395 2.95724 14.8821 3.2845C14.0247 3.61176 13.2884 4.19445 12.773 4.95376C12.2575 5.71308 11.9877 6.61238 12 7.53005V8.53005C10.2426 8.57561 8.50127 8.18586 6.93101 7.39549C5.36074 6.60513 4.01032 5.43868 3 4.00005C3 4.00005 -1 13 8 17C5.94053 18.398 3.48716 19.099 1 19C10 24 21 19 21 7.50005C20.9991 7.2215 20.9723 6.94364 20.92 6.67005C21.9406 5.66354 22.6608 4.39276 23 3.00005Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                    <a href="https://linkedin.com/company/breefly" target="_blank" aria-label="LinkedIn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6 9H2V21H6V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
+            <div class="footer-content">
+                <div class="footer-logo">Breefly</div>
+                <div class="footer-links">
+                    <a onclick="openModal('privacyModal')">Privacy</a>
+                    <a onclick="openModal('termsModal')">Terms</a>
+                    <a onclick="openModal('contactModal')">Contact</a>
                 </div>
-            </div>
-            <div class="footer-nav">
-                <div class="footer-nav-column">
-                    <h4>Product</h4>
-                    <ul>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav-column">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav-column">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Cookies</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Breefly.ai. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/waitlist.js"></script>
+    <script>
+        // Modal Functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeModal(e.target.id);
+            }
+        });
+
+        // Close modal with escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const activeModal = document.querySelector('.modal-overlay.active');
+                if (activeModal) {
+                    closeModal(activeModal.id);
+                }
+            }
+        });
+
+        // Contact Form Handler with API integration
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    name: document.getElementById('contactName').value.trim(),
+                    email: document.getElementById('contactEmail').value.trim(),
+                    subject: document.getElementById('contactSubject').value.trim(),
+                    message: document.getElementById('contactMessage').value.trim()
+                };
+                
+                const messageDiv = document.getElementById('contactFormMessage');
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.textContent;
+                
+                // Basic validation
+                if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                    messageDiv.innerHTML = '<p style="color: #ef4444; margin-top: 1rem; font-size: 14px; text-align: center;">Please fill in all fields.</p>';
+                    return;
+                }
+                
+                if (!isValidEmail(formData.email)) {
+                    messageDiv.innerHTML = '<p style="color: #ef4444; margin-top: 1rem; font-size: 14px; text-align: center;">Please enter a valid email address.</p>';
+                    return;
+                }
+                
+                // Show loading state
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+                
+                // Contact API endpoint (following same pattern as waitlist)
+                const contactEndpoint = 'https://waitlist.breefly.ai/api/contact';
+                
+                // Send the data to your API
+                // Open email client with pre-filled data
+const subject = encodeURIComponent(formData.subject);
+const body = encodeURIComponent(`Hi Breefly team,\n\n${formData.message}\n\nBest regards,\n${formData.name}`);
+const mailtoLink = `mailto:Amit@breefly.ai?subject=${subject}&body=${body}`;
+
+// Open email client
+window.location.href = mailtoLink;
+
+// Show success message
+messageDiv.innerHTML = '<p style="color: #5FBFB1; margin-top: 1rem; font-size: 14px; text-align: center;">✓ Opening your email client...</p>';
+
+// Reset form and button
+contactForm.reset();
+submitButton.textContent = originalButtonText;
+submitButton.disabled = false;
+
+// Clear message after 3 seconds
+setTimeout(() => {
+    messageDiv.innerHTML = '';
+    closeModal('contactModal');
+}, 3000);
+            });
+        }
+
+        // Smooth scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            if (el) observer.observe(el);
+        });
+
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+
+        window.addEventListener('scroll', () => {
+            if (nav && window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else if (nav) {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 100;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced waitlist form with your existing API
+        const waitlistForm = document.getElementById('waitlistForm');
+        if (waitlistForm) {
+            waitlistForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value.trim();
+                const submitButton = this.querySelector('button[type="submit"]');
+                const messageDiv = document.getElementById('formMessage');
+                
+                if (!email || !submitButton || !messageDiv) return;
+                
+                // Basic validation
+                if (!email) {
+                    showMessage('Please enter your email address.', 'error');
+                    return;
+                }
+                
+                if (!isValidEmail(email)) {
+                    showMessage('Please enter a valid email address.', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                const originalButtonText = submitButton.textContent;
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+                
+                // Your existing API endpoint
+                const apiEndpoint = 'https://waitlist.breefly.ai/api/join-waitlist';
+                
+                // Send the data to your API
+                fetch(apiEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success message
+                        showMessage(data.message || 'Thanks for joining! We\'ll be in touch soon.', 'success');
+                        
+                        // Clear the form
+                        document.getElementById('email').value = '';
+                        
+                        // Enhanced success animation
+                        submitButton.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+                        submitButton.textContent = 'Access Reserved';
+                        
+                        setTimeout(() => {
+                            submitButton.style.background = '';
+                            submitButton.textContent = originalButtonText;
+                            submitButton.disabled = false;
+                        }, 3000);
+                    } else {
+                        // Show error message
+                        showMessage(data.message || 'Something went wrong. Please try again.', 'error');
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showMessage('Something went wrong. Please try again later.', 'error');
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                });
+            });
+        }
+        
+        // Helper function to validate email (from your existing code)
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Helper function to show form messages (consistent with existing code)
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('formMessage');
+            if (!messageDiv) return;
+            
+            messageDiv.textContent = message;
+            messageDiv.className = 'form-message';
+            messageDiv.classList.add(`form-message-${type}`);
+            messageDiv.style.marginTop = '1rem';
+            messageDiv.style.fontSize = '14px';
+            messageDiv.style.fontWeight = '500';
+            messageDiv.style.textAlign = 'center';
+            
+            if (type === 'success') {
+                messageDiv.style.color = '#5FBFB1';
+            } else {
+                messageDiv.style.color = '#ef4444';
+            }
+            
+            // Clear error message after 5 seconds if it's an error
+            if (type === 'error') {
+                setTimeout(() => {
+                    if (messageDiv) {
+                        messageDiv.textContent = '';
+                        messageDiv.className = 'form-message';
+                    }
+                }, 5000);
+            }
+        }
+
+        // Enhanced immersive particle system
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            const particleCount = 80; // Increased from 30 to 80 for more density
+            
+            // Clear any existing particles first
+            particlesContainer.innerHTML = '';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Varied particle sizes for more visual interest
+                const size = Math.random() * 4 + 1.5; // 1.5px to 5.5px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random horizontal position
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Staggered start positions for immediate visual impact
+                particle.style.bottom = Math.random() * 100 + '%';
+                
+                // Random animation delay for continuous flow
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                
+                // Varied animation duration for organic movement
+                particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                
+                // Add different opacity levels for depth
+                const opacity = Math.random() * 0.3 + 0.1; // 0.1 to 0.4
+                particle.style.setProperty('--particle-opacity', opacity);
+                
+                // Add cleanup listener
+                particle.addEventListener('animationiteration', () => {
+                    if (Math.random() > 0.85) { // Adjusted cleanup rate
+                        particle.remove();
+                    }
+                });
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Continuous particle generation for sustained effect
+            setInterval(() => {
+                const currentParticles = particlesContainer.querySelectorAll('.particle').length;
+                if (currentParticles < 60) { // Maintain minimum particle count
+                    // Add new particles
+                    for (let i = 0; i < 5; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        
+                        const size = Math.random() * 4 + 1.5;
+                        particle.style.width = size + 'px';
+                        particle.style.height = size + 'px';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.animationDelay = '0s';
+                        particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                        
+                        const opacity = Math.random() * 0.3 + 0.1;
+                        particle.style.setProperty('--particle-opacity', opacity);
+                        
+                        particlesContainer.appendChild(particle);
+                    }
+                }
+                
+                // Cleanup excess particles
+                const particles = particlesContainer.querySelectorAll('.particle');
+                if (particles.length > 100) {
+                    for (let i = 0; i < 10; i++) {
+                        if (particles[i]) particles[i].remove();
+                    }
+                }
+            }, 3000); // Check every 3 seconds
+        }
+
+        // Enhanced scroll-based background animations
+        let ticking = false;
+        
+        function updateBackground() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            const rateParticles = scrolled * -0.1;
+            
+            // Move floating elements based on scroll
+            document.querySelectorAll('.float-element').forEach((element, index) => {
+                const speed = (index + 1) * 0.2;
+                element.style.transform = `translate(${rate * speed}px, ${scrolled * speed * 0.1}px)`;
+            });
+            
+            // Adjust grid based on scroll
+            const grid = document.querySelector('.bg-grid');
+            if (grid) {
+                grid.style.transform = `translate(${rateParticles}px, ${scrolled * 0.2}px)`;
+            }
+            
+            ticking = false;
+        }
+
+        function requestBackgroundUpdate() {
+            if (!ticking) {
+                requestAnimationFrame(updateBackground);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestBackgroundUpdate);
+
+        // Advanced mouse interaction with background
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX / window.innerWidth;
+            mouseY = e.clientY / window.innerHeight;
+        });
+
+        function animateBackgroundElements() {
+            targetX += (mouseX - targetX) * 0.02;
+            targetY += (mouseY - targetY) * 0.02;
+            
+            document.querySelectorAll('.float-element').forEach((element, index) => {
+                const speed = (index + 1) * 0.5;
+                const moveX = (targetX - 0.5) * speed * 50;
+                const moveY = (targetY - 0.5) * speed * 50;
+                
+                element.style.transform += ` translate(${moveX}px, ${moveY}px)`;
+            });
+            
+            // Subtle particle system response to mouse
+            document.querySelectorAll('.particle').forEach((particle, index) => {
+                if (index % 3 === 0) { // Only affect every 3rd particle for performance
+                    const speed = 0.2;
+                    const moveX = (targetX - 0.5) * speed * 20;
+                    particle.style.transform += ` translateX(${moveX}px)`;
+                }
+            });
+            
+            requestAnimationFrame(animateBackgroundElements);
+        }
+
+        // FIXED Platform demo functionality
+        function initPlatformDemo() {
+            const demoTabs = document.querySelectorAll('.demo-tab');
+            const dashboardViews = document.querySelectorAll('.dashboard-view');
+            
+            demoTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active from all tabs and views
+                    demoTabs.forEach(t => t.classList.remove('active'));
+                    dashboardViews.forEach(v => {
+                        v.classList.remove('active');
+                        v.style.visibility = 'hidden';
+                        v.style.opacity = '0';
+                    });
+                    
+                    // Add active to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding view with proper timing
+                    const viewId = tab.getAttribute('data-view') + '-view';
+                    const targetView = document.getElementById(viewId);
+                    if (targetView) {
+                        // Small delay to ensure smooth transition
+                        setTimeout(() => {
+                            targetView.classList.add('active');
+                            targetView.style.visibility = 'visible';
+                            targetView.style.opacity = '1';
+                        }, 50);
+                    }
+                });
+            });
+        }
+
+        // Auto-cycle through demo tabs
+        function autoCyclePlatformDemo() {
+            const tabs = document.querySelectorAll('.demo-tab');
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                // Only auto-cycle if user isn't hovering over the demo area
+                const demoContainer = document.querySelector('.platform-demo');
+                if (!demoContainer.matches(':hover')) {
+                    currentIndex = (currentIndex + 1) % tabs.length;
+                    tabs[currentIndex].click();
+                }
+            }, 4000);
+        }
+
+        // Enhanced Platform Interactive Effects
+        function initEnhancedPlatform() {
+            const platform = document.querySelector('.platform');
+            const cursorGlow = document.getElementById('cursorGlow');
+            const dashboardContainer = document.getElementById('dashboardContainer');
+            const platformParticles = document.getElementById('platformParticles');
+
+            if (!platform) return; // Exit if platform section doesn't exist
+
+            // Mouse tracking for cursor glow and background effects
+            platform.addEventListener('mousemove', (e) => {
+                const rect = platform.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xPercent = (x / rect.width) * 100;
+                const yPercent = (y / rect.height) * 100;
+
+                // Update CSS custom properties for background gradients
+                platform.style.setProperty('--mouse-x', xPercent + '%');
+                platform.style.setProperty('--mouse-y', yPercent + '%');
+
+                // Position cursor glow
+                if (cursorGlow) {
+                    cursorGlow.style.left = (x - 100) + 'px';
+                    cursorGlow.style.top = (y - 100) + 'px';
+                    cursorGlow.style.opacity = '1';
+                }
+            });
+
+            platform.addEventListener('mouseleave', () => {
+                if (cursorGlow) {
+                    cursorGlow.style.opacity = '0';
+                }
+            });
+
+            // Create floating particles with better cleanup
+            function createPlatformParticles() {
+                if (!platformParticles) return;
+                
+                // Clear any existing particles first
+                platformParticles.innerHTML = '';
+                
+                for (let i = 0; i < 15; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'platform-particle';
+                    
+                    const size = Math.random() * 3 + 1.5;
+                    particle.style.width = size + 'px';
+                    particle.style.height = size + 'px';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 15 + 's';
+                    particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                    
+                    // Add cleanup listener
+                    particle.addEventListener('animationiteration', () => {
+                        if (Math.random() > 0.7) { // Randomly remove some particles to prevent buildup
+                            particle.remove();
+                        }
+                    });
+                    
+                    platformParticles.appendChild(particle);
+                }
+                
+                // Periodic cleanup to ensure no stuck particles
+                setInterval(() => {
+                    const particles = platformParticles.querySelectorAll('.platform-particle');
+                    if (particles.length > 20) {
+                        // Remove oldest particles if too many exist
+                        for (let i = 0; i < 5; i++) {
+                            if (particles[i]) particles[i].remove();
+                        }
+                    }
+                }, 5000);
+            }
+
+            // Enhanced hover effects for commentary items
+            document.querySelectorAll('.commentary-item').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    item.style.background = 'rgba(95, 191, 177, 0.05)';
+                    item.style.borderLeft = '3px solid var(--primary)';
+                    item.style.paddingLeft = 'calc(var(--space-md) + 3px)';
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    item.style.background = '';
+                    item.style.borderLeft = '';
+                    item.style.paddingLeft = '';
+                });
+            });
+
+            // Initialize particles
+            createPlatformParticles();
+        }
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            // Start loading sequence
+            initLoadingSequence();
+        });
+
+        // Sophisticated Loading Sequence
+        function initLoadingSequence() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const body = document.body;
+            
+            // Ensure minimum loading time for the experience
+            const minLoadingTime = 3000; // 3 seconds
+            const startTime = Date.now();
+            
+            // Simulate loading process
+            setTimeout(() => {
+                const elapsed = Date.now() - startTime;
+                const remainingTime = Math.max(0, minLoadingTime - elapsed);
+                
+                setTimeout(() => {
+                    // Hide loading screen
+                    loadingScreen.classList.add('hidden');
+                    body.classList.remove('loading');
+                    
+                    // Initialize site after loading completes
+                    setTimeout(() => {
+                        initializeSite();
+                    }, 300);
+                    
+                }, remainingTime);
+            }, 500);
+        }
+
+        // Initialize site functionality after loading
+        function initializeSite() {
+            createParticles();
+            animateBackgroundElements();
+            initPlatformDemo(); // Fixed function
+            initEnhancedPlatform();
+            
+            // Start auto-cycle after a delay
+            setTimeout(() => {
+                autoCyclePlatformDemo();
+            }, 3000);
+            
+            // Smooth fade in main content
+            document.body.style.transition = 'opacity 0.8s ease-in-out';
+            document.querySelector('.nav').style.transition = 'opacity 0.8s ease-in-out';
+            document.querySelector('.hero').style.transition = 'opacity 0.8s ease-in-out';
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.transition = 'opacity 0.8s ease-in-out';
+            });
+        }
+
+        // Advanced intersection observer for staggered animations
+        const staggerObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting && entry.target) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card, .confession-card, .evolution-stage').forEach(card => {
+            if (card) staggerObserver.observe(card);
+        });
+    </script>
 </body>
 </html>
