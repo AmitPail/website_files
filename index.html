@@ -24,6 +24,10 @@
             --primary-light: #7DD3C7;
             --primary-dark: #4A9B91;
             --primary-ultra-light: rgba(95, 191, 177, 0.08);
+            --bg-dark: #0a0e27;
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            --primary-gradient: linear-gradient(135deg, #5FBFB1 0%, #7DD3C7 100%);
+            --mixed-gradient: linear-gradient(135deg, #4A9B91 0%, #5FBFB1 50%, #e0f7f4 100%);
             
             /* Sophisticated Neutrals */
             --white: #FFFFFF;
@@ -83,6 +87,43 @@
             line-height: 1.6;
             overflow-x: hidden;
             font-size: 14px;
+        }
+
+        .headline-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #B3FFF2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            background-size: 300% 300%;
+            animation: gradientShift 6s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .headline-emphasis {
+            text-shadow: 0 0 18px rgba(95, 191, 177, 0.35);
+        }
+
+        .headline-light {
+            color: var(--gray-50);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 80% 45%;
+            }
+            50% {
+                background-position: 160% 55%;
+            }
+            75% {
+                background-position: 80% 45%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Modal Styles */
@@ -214,7 +255,7 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: var(--space-sm);
+            gap: var(--space-md);
         }
 
         .form-label {
@@ -482,33 +523,30 @@
             z-index: 1000;
             width: calc(100% - var(--space-2xl));
             max-width: 1000px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.028);
             backdrop-filter: blur(32px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: var(--radius-xl);
             padding: var(--space-sm) var(--space-lg);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            transition: opacity 0.65s ease,
+                        box-shadow 1.1s cubic-bezier(0.19, 1, 0.22, 1),
+                        background 0.9s cubic-bezier(0.19, 1, 0.22, 1),
+                        border-color 0.9s cubic-bezier(0.19, 1, 0.22, 1),
+                        transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
+            opacity: 0;
+            pointer-events: none;
         }
 
-        .nav:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(95, 191, 177, 0.15);
-            box-shadow: 0 12px 48px rgba(95, 191, 177, 0.08);
-            transform: translateX(-50%) translateY(-2px);
+        .nav.nav-ready {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .nav.scrolled {
-            background: rgba(15, 20, 25, 0.9);
-            border-color: rgba(95, 191, 177, 0.2);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(40px);
-        }
-
-        .nav.scrolled:hover {
-            background: rgba(15, 20, 25, 0.95);
-            border-color: rgba(95, 191, 177, 0.3);
-            box-shadow: 0 16px 60px rgba(95, 191, 177, 0.12);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
         .nav-content {
@@ -519,7 +557,7 @@
         }
 
         .logo {
-            font-family: var(--font-display);
+            font-family: var(--font-primary);
             font-size: 18px;
             font-weight: 600;
             color: var(--primary);
@@ -527,11 +565,7 @@
             letter-spacing: -0.02em;
             transition: all 0.3s ease;
             position: relative;
-        }
-
-        .logo:hover {
-            color: var(--primary-light);
-            transform: scale(1.05);
+            padding: 4px 10px;
         }
 
         .logo::after {
@@ -546,9 +580,19 @@
             border-radius: 1px;
         }
 
-        .logo:hover::after {
-            width: 100%;
+        .logo::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 50% 50%, rgba(95, 191, 177, 0.25) 0%, rgba(95, 191, 177, 0.05) 60%, transparent 100%);
+            opacity: 0;
+            transform: scale(0.85);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
         }
+
 
         .nav-links {
             display: flex;
@@ -561,85 +605,80 @@
             text-decoration: none;
             font-size: 12px;
             font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             padding: 8px 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             letter-spacing: 0.01em;
-        }
-
-        .nav-links a:hover {
-            color: var(--white);
-            background: rgba(95, 191, 177, 0.08);
-            transform: translateY(-1px);
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(95, 191, 177, 0.1) 0%, rgba(95, 191, 177, 0.05) 100%);
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            opacity: 1;
+            transition: color 0.35s ease,
+                        background 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+                        letter-spacing 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+                        box-shadow 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
+            left: 10px;
+            right: 10px;
+            bottom: 6px;
             height: 1px;
-            background: var(--primary);
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, transparent, rgba(95, 191, 177, 0.4), transparent);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
+            opacity: 0;
         }
 
-        .nav-links a:hover::after {
-            width: 60%;
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--white);
+            background: rgba(95, 191, 177, 0.08);
+            letter-spacing: 0.02em;
+            box-shadow: 0 12px 28px rgba(95, 191, 177, 0.08);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a:focus-visible::after {
+            transform: scaleX(1);
+            opacity: 1;
         }
 
         .nav-cta {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: var(--gray-900);
             padding: 8px 16px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-size: 12px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 16px rgba(95, 191, 177, 0.2);
+            box-shadow: 0 6px 20px rgba(95, 191, 177, 0.22);
             position: relative;
             overflow: hidden;
+            transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+                        box-shadow 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+                        filter 0.6s ease;
         }
 
-        .nav-cta::before {
+        .nav-cta::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .nav-cta:hover::before {
-            left: 100%;
+        .nav-cta:hover,
+        .nav-cta:focus-visible {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 40px rgba(95, 191, 177, 0.25);
+            filter: brightness(1.05);
         }
 
-        .nav-cta:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 32px rgba(95, 191, 177, 0.3);
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        .nav-cta:hover::after,
+        .nav-cta:focus-visible::after {
+            opacity: 1;
         }
 
         .nav-cta:active {
@@ -677,6 +716,157 @@
             gap: var(--space-4xl);
             align-items: center;
         }
+
+.glass-dashboard {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 32px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: transform 0.5s ease;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+}
+
+.glass-dashboard:hover {
+    transform: perspective(1000px) rotateY(0deg) scale(1.02);
+}
+
+.glass-dashboard::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(95, 191, 177, 0.05), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: rgba(95, 191, 177, 0.1);
+    border-radius: 100px;
+    border: 1px solid rgba(95, 191, 177, 0.2);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: blink 2s infinite;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.status-text {
+    font-size: 14px;
+    color: var(--primary-light);
+    font-weight: 600;
+}
+
+.metric-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.metric-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    background: rgba(95, 191, 177, 0.05);
+    border-color: rgba(95, 191, 177, 0.2);
+    transform: translateY(-4px);
+}
+
+.metric-value {
+    font-size: 36px;
+    font-weight: 700;
+    background: var(--mixed-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+
+.metric-label {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.chart-preview {
+    height: 200px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 100%;
+    gap: 12px;
+}
+
+.bar {
+    width: 40px;
+    background: var(--mixed-gradient);
+    border-radius: 8px 8px 0 0;
+    animation: growBar 1.5s ease forwards;
+    opacity: 0;
+    box-shadow: 0 0 20px rgba(95, 191, 177, 0.2);
+}
+
+@keyframes growBar {
+    to {
+        opacity: 1;
+    }
+}
+
+.bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+.bar:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+.bar:nth-child(3) { height: 45%; animation-delay: 0.3s; }
+.bar:nth-child(4) { height: 90%; animation-delay: 0.4s; }
+.bar:nth-child(5) { height: 70%; animation-delay: 0.5s; }
+.bar:nth-child(6) { height: 85%; animation-delay: 0.6s; }
+.bar:nth-child(7) { height: 55%; animation-delay: 0.7s; }
 
         .hero-content {
             z-index: 2;
@@ -718,10 +908,6 @@
             line-height: 1.1;
             margin-bottom: var(--space-lg);
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--white) 0%, var(--gray-200) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .hero-subtitle {
@@ -881,61 +1067,86 @@
 
         .bg-particles {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
 
         .particle {
             position: absolute;
-            background: var(--primary);
             border-radius: 50%;
-            opacity: var(--particle-opacity, 0.15);
-            animation: float-particle 20s linear infinite;
+            opacity: 0;
+            animation: float-particle 24s linear infinite;
             animation-fill-mode: forwards;
             pointer-events: none;
-            box-shadow: 0 0 10px rgba(95, 191, 177, 0.3);
+            will-change: transform, opacity;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95) 0%, rgba(159, 241, 225, 0.55) 45%, rgba(95, 191, 177, 0.15) 70%, rgba(95, 191, 177, 0) 100%);
+            filter: drop-shadow(0 0 16px rgba(95, 191, 177, 0.35));
+            --drift-start: 0px;
+            --drift-25: 0px;
+            --drift-50: 0px;
+            --drift-75: 0px;
+            --drift-100: 0px;
+            --scale-start: 0.4;
+            --scale-mid: 0.8;
+            --scale-peak: 1.05;
+            --scale-end: 0.4;
+            --opacity-mid: 0.2;
+            --opacity-low: 0.1;
+            --interactive-offset: 0px;
+            --start-y: 110vh;
+            --25-y: 80vh;
+            --50-y: 45vh;
+            --75-y: 15vh;
+            --end-y: -10vh;
         }
 
-        .particle:nth-child(odd) {
-            background: var(--primary-light);
-            animation-duration: 25s;
-            animation-direction: reverse;
-            box-shadow: 0 0 8px rgba(125, 211, 199, 0.4);
+        .particle.layer-back {
+            filter: blur(6px);
+            --scale-start: 0.5;
+            --scale-mid: 0.9;
+            --scale-peak: 1.1;
+            --scale-end: 0.6;
+            --opacity-mid: 0.1;
+            --opacity-low: 0.05;
         }
 
-        .particle:nth-child(3n) {
-            background: rgba(95, 191, 177, 0.8);
-            animation-duration: 30s;
-            box-shadow: 0 0 6px rgba(95, 191, 177, 0.5);
+        .particle.layer-mid {
+            filter: blur(4px);
+            --opacity-mid: 0.15;
+            --opacity-low: 0.07;
         }
 
-        .particle:nth-child(4n) {
-            background: rgba(125, 211, 199, 0.6);
-            animation-duration: 18s;
-            box-shadow: 0 0 12px rgba(125, 211, 199, 0.3);
+        .particle.layer-front {
+            filter: drop-shadow(0 0 20px rgba(95, 191, 177, 0.45));
+            --scale-start: 0.35;
+            --scale-mid: 0.7;
+            --scale-peak: 1.15;
+            --scale-end: 0.3;
+            --opacity-mid: 0.22;
+            --opacity-low: 0.1;
         }
 
         @keyframes float-particle {
             0% {
-                transform: translateY(100vh) rotate(0deg) scale(0);
+                transform: translate3d(calc(var(--drift-start) + var(--interactive-offset)), var(--start-y), 0) scale(var(--scale-start));
                 opacity: 0;
             }
-            5% {
-                opacity: var(--particle-opacity, 0.2);
-                transform: translateY(95vh) rotate(18deg) scale(1);
+            25% {
+                transform: translate3d(calc(var(--drift-25) + var(--interactive-offset)), var(--25-y), 0) scale(var(--scale-mid));
+                opacity: var(--opacity-mid);
             }
             50% {
-                opacity: var(--particle-opacity, 0.3);
-                transform: translateY(50vh) rotate(180deg) scale(1.2);
+                transform: translate3d(calc(var(--drift-50) + var(--interactive-offset)), var(--50-y), 0) scale(var(--scale-peak));
+                opacity: var(--opacity-mid);
             }
-            95% {
-                opacity: var(--particle-opacity, 0.1);
-                transform: translateY(5vh) rotate(342deg) scale(0.8);
+            75% {
+                transform: translate3d(calc(var(--drift-75) + var(--interactive-offset)), var(--75-y), 0) scale(var(--scale-mid));
+                opacity: var(--opacity-low);
             }
             100% {
-                transform: translateY(-10vh) rotate(360deg) scale(0);
+                transform: translate3d(calc(var(--drift-100) + var(--interactive-offset)), var(--end-y), 0) scale(var(--scale-end));
                 opacity: 0;
-                visibility: hidden;
             }
         }
 
@@ -949,16 +1160,6 @@
                 linear-gradient(rgba(95, 191, 177, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(95, 191, 177, 0.03) 1px, transparent 1px);
             background-size: 100px 100px;
-            animation: grid-flow 30s linear infinite;
-        }
-
-        @keyframes grid-flow {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(100px, 100px);
-            }
         }
 
         .floating-elements {
@@ -1053,6 +1254,10 @@
         .section-header {
             text-align: center;
             margin-bottom: var(--space-4xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
         }
 
         .section-badge {
@@ -1320,31 +1525,69 @@
 
         .platform-particle {
             position: absolute;
-            background: var(--primary);
             border-radius: 50%;
             opacity: 0;
-            animation: float-platform-particle 15s linear infinite;
+            animation: float-platform-particle 18s linear infinite;
             animation-fill-mode: forwards;
             pointer-events: none;
+            will-change: transform, opacity;
+            background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.9) 0%, rgba(159, 241, 225, 0.55) 35%, rgba(95, 191, 177, 0.2) 70%, rgba(95, 191, 177, 0) 100%);
+            filter: drop-shadow(0 0 16px rgba(95, 191, 177, 0.4));
+            --drift-start: 0px;
+            --drift-30: 0px;
+            --drift-70: 0px;
+            --drift-100: 0px;
+            --scale-start: 0.4;
+            --scale-mid: 0.85;
+            --scale-peak: 1.1;
+            --scale-end: 0.5;
+            --opacity-mid: 0.3;
+            --opacity-low: 0.15;
+            --start-y: 120%;
+            --30-y: 80%;
+            --70-y: 20%;
+            --end-y: -20%;
+        }
+
+        .platform-particle.layer-back {
+            filter: blur(6px);
+            --opacity-mid: 0.16;
+            --opacity-low: 0.08;
+            --scale-peak: 0.9;
+        }
+
+        .platform-particle.layer-mid {
+            filter: blur(3px);
+            --opacity-mid: 0.2;
+            --opacity-low: 0.1;
+        }
+
+        .platform-particle.layer-front {
+            filter: drop-shadow(0 0 20px rgba(95, 191, 177, 0.5));
+            --scale-start: 0.35;
+            --scale-mid: 0.85;
+            --scale-peak: 1.15;
+            --scale-end: 0.45;
+            --opacity-mid: 0.28;
+            --opacity-low: 0.14;
         }
 
         @keyframes float-platform-particle {
             0% {
-                transform: translateY(100%) scale(0);
+                transform: translate3d(var(--drift-start), var(--start-y), 0) scale(var(--scale-start));
                 opacity: 0;
             }
-            10% {
-                opacity: 0.4;
-                transform: translateY(90%) scale(1);
+            30% {
+                opacity: var(--opacity-mid);
+                transform: translate3d(var(--drift-30), var(--30-y), 0) scale(var(--scale-mid));
             }
-            90% {
-                opacity: 0.1;
-                transform: translateY(-10%) scale(0.5);
+            70% {
+                opacity: var(--opacity-mid);
+                transform: translate3d(var(--drift-70), var(--70-y), 0) scale(var(--scale-peak));
             }
             100% {
-                transform: translateY(-30%) scale(0);
+                transform: translate3d(var(--drift-100), var(--end-y), 0) scale(var(--scale-end));
                 opacity: 0;
-                visibility: hidden;
             }
         }
 
@@ -1786,6 +2029,10 @@
             text-align: center;
             max-width: 600px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
         }
 
         .waitlist-form {
@@ -1832,7 +2079,7 @@
         }
 
         .footer-logo {
-            font-family: var(--font-display);
+            font-family: var(--font-primary);
             font-size: 18px;
             font-weight: 600;
             color: var(--primary);
@@ -2235,12 +2482,11 @@
                     Your AI Trading Companion
                 </div>
                 <h1 class="hero-title">
-                    From overwhelmed<br>
-                    to <span style="color: var(--primary);">overpowered</span>
+                    <span class="headline-light">From overwhelmed</span><br>
+                    <span class="headline-gradient">to <span class="headline-emphasis">overpowered</span></span>
                 </h1>
                 <p class="hero-subtitle">
-                    Your AI trading companion that actually gets you. We turn market chaos into clarity, 
-                    delivering macro-to-micro insights with just the right amount of wit.
+                    Your AI trading companion that actually gets you. We turn market chaos into clarity. 
                 </p>
                 <div class="hero-actions">
                     <a href="#waitlist" class="btn-primary">Get Early Access</a>
@@ -2253,41 +2499,37 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="dashboard-preview">
-                    <div class="dashboard-card card-main">
-                        <div class="card-header">
-                            <div class="card-dot"></div>
-                            <div class="card-dot"></div>
-                            <div class="card-dot"></div>
-                        </div>
-                        <div class="card-content">
-                            <div class="chart-line" style="width: 80%;"></div>
-                            <div class="chart-line" style="width: 60%; animation-delay: 0.5s;"></div>
-                            <div class="chart-line" style="width: 90%; animation-delay: 1s;"></div>
-                            <div class="chart-line" style="width: 70%; animation-delay: 1.5s;"></div>
+                <div class="glass-dashboard">
+                    <div class="dashboard-header">
+                        <h3 style="font-size: 18px; font-weight: 600;">Breefly Insight Hub</h3>
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span class="status-text">Realtime Signals</span>
                         </div>
                     </div>
-                    <div class="dashboard-card card-secondary">
-                        <div class="card-header">
-                            <div class="card-dot"></div>
-                            <div class="card-dot"></div>
-                            <div class="card-dot"></div>
+                    <div class="metric-cards">
+                        <div class="metric-card">
+                            <div class="metric-value">+23%</div>
+                            <div class="metric-label">Portfolio Growth</div>
                         </div>
-                        <div class="card-content">
-                            <div class="chart-line" style="width: 70%;"></div>
-                            <div class="chart-line" style="width: 85%; animation-delay: 0.8s;"></div>
-                            <div class="chart-line" style="width: 50%; animation-delay: 1.3s;"></div>
+                        <div class="metric-card">
+                            <div class="metric-value">NONE</div>
+                            <div class="metric-label">Daily Stress</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">∞</div>
+                            <div class="metric-label">Peace of Mind</div>
                         </div>
                     </div>
-                    <div class="dashboard-card card-accent">
-                        <div class="card-header">
-                            <div class="card-dot"></div>
-                            <div class="card-dot"></div>
-                            <div class="card-dot"></div>
-                        </div>
-                        <div class="card-content">
-                            <div class="chart-line" style="width: 95%;"></div>
-                            <div class="chart-line" style="width: 75%; animation-delay: 0.7s;"></div>
+                    <div class="chart-preview">
+                        <div class="chart-bars">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
                         </div>
                     </div>
                 </div>
@@ -2300,7 +2542,7 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Your Trading Sidekick</div>
-                <h2 class="section-title">Market chaos? <span style="color: var(--primary);">We got you.</span></h2>
+                <h2 class="section-title headline-gradient">Market chaos? <span class="headline-emphasis">We got you.</span></h2>
                 <p class="section-subtitle">
                     We're the friend who actually reads all the market news, connects the dots, 
                     and tells you what matters to YOUR portfolio. Think less, trade smarter.
@@ -2358,7 +2600,7 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Your Trading Evolution</div>
-                <h2 class="section-title">From panic mode to <span style="color: var(--primary);">profit mode</span></h2>
+                <h2 class="section-title headline-gradient">From panic mode to <span class="headline-emphasis">profit mode</span></h2>
                 <p class="section-subtitle">
                     Watch your trading game transform from chaotic fumbling to confident precision. 
                     It's like having a trading coach who actually has a sense of humor.
@@ -2465,7 +2707,7 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Meet Your Trading Sidekick</div>
-                <h2 class="section-title">Where market chaos becomes your <span style="color: var(--primary);">playground</span></h2>
+                <h2 class="section-title headline-gradient">Where market chaos becomes your <span class="headline-emphasis">playground</span></h2>
                 <p class="section-subtitle">
                     This is your command center for turning financial noise into winning moves. 
                     Smart, fast, and surprisingly fun to use.
@@ -2661,7 +2903,7 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Trading Confessions</div>
-                <h2 class="section-title">Real stories from traders who <span style="color: var(--primary);">found their edge</span></h2>
+                <h2 class="section-title headline-gradient">Real stories from traders who <span class="headline-emphasis">found their edge</span></h2>
                 <p class="section-subtitle">
                     No sugar-coating, no BS. Just honest confessions from traders who discovered 
                     what it's like to have a sidekick who actually has their back.
@@ -2797,7 +3039,7 @@
         <div class="container">
             <div class="waitlist-content fade-in">
                 <div class="section-badge">Early Access</div>
-                <h2 class="section-title">Ready to crush it?</h2>
+                <h2 class="section-title headline-gradient">Ready to crush it?</h2>
                 <p class="section-subtitle">
                     Join the traders who've discovered that market analysis doesn't have to be boring. 
                     Warning: may cause sudden confidence and better decisions.
@@ -2950,9 +3192,10 @@ setTimeout(() => {
         const nav = document.getElementById('nav');
 
         window.addEventListener('scroll', () => {
-            if (nav && window.scrollY > 100) {
+            if (!nav) return;
+            if (window.scrollY > 140) {
                 nav.classList.add('scrolled');
-            } else if (nav) {
+            } else {
                 nav.classList.remove('scrolled');
             }
         });
@@ -3081,115 +3324,143 @@ setTimeout(() => {
             }
         }
 
+        const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
         // Enhanced immersive particle system
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             if (!particlesContainer) return;
-            
-            const particleCount = 80; // Increased from 30 to 80 for more density
-            
-            // Clear any existing particles first
+
+            if (particlesContainer.dataset.maintainInterval) {
+                clearInterval(Number(particlesContainer.dataset.maintainInterval));
+            }
+
+            const layers = [
+                {
+                    className: 'layer-back',
+                    count: 24,
+                    size: [3.5, 6.5],
+                    duration: [24, 34],
+                    opacity: [0.12, 0.22],
+                    amplitude: [30, 65]
+                },
+                {
+                    className: 'layer-mid',
+                    count: 22,
+                    size: [3, 5.5],
+                    duration: [18, 28],
+                    opacity: [0.18, 0.3],
+                    amplitude: [40, 95]
+                },
+                {
+                    className: 'layer-front',
+                    count: 18,
+                    size: [2.5, 4.5],
+                    duration: [14, 22],
+                    opacity: [0.22, 0.38],
+                    amplitude: [55, 120]
+                }
+            ];
+
             particlesContainer.innerHTML = '';
-            
-            for (let i = 0; i < particleCount; i++) {
+
+            const spawnParticle = (layer, initial = false) => {
                 const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Varied particle sizes for more visual interest
-                const size = Math.random() * 4 + 1.5; // 1.5px to 5.5px
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                
-                // Random horizontal position
-                particle.style.left = Math.random() * 100 + '%';
-                
-                // Staggered start positions for immediate visual impact
-                particle.style.bottom = Math.random() * 100 + '%';
-                
-                // Random animation delay for continuous flow
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                
-                // Varied animation duration for organic movement
-                particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
-                
-                // Add different opacity levels for depth
-                const opacity = Math.random() * 0.3 + 0.1; // 0.1 to 0.4
-                particle.style.setProperty('--particle-opacity', opacity);
-                
-                // Add cleanup listener
+                particle.className = `particle ${layer.className}`;
+
+                const size = randomBetween(layer.size[0], layer.size[1]);
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                particle.style.left = `${randomBetween(-5, 105)}%`;
+
+                const duration = randomBetween(layer.duration[0], layer.duration[1]);
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = initial ? `${-randomBetween(0, duration)}s` : '0s';
+
+                const direction = Math.random() > 0.5 ? 1 : -1;
+                const amplitude = randomBetween(layer.amplitude[0], layer.amplitude[1]) * direction;
+
+                const driftStart = amplitude * -0.35;
+                const drift25 = amplitude * -0.15;
+                const drift50 = amplitude * 0.35;
+                const drift75 = amplitude * 0.85;
+                const driftEnd = amplitude * 1.2;
+
+                particle.style.setProperty('--drift-start', `${driftStart}px`);
+                particle.style.setProperty('--drift-25', `${drift25}px`);
+                particle.style.setProperty('--drift-50', `${drift50}px`);
+                particle.style.setProperty('--drift-75', `${drift75}px`);
+                particle.style.setProperty('--drift-100', `${driftEnd}px`);
+
+                const opacity = randomBetween(layer.opacity[0], layer.opacity[1]);
+                particle.style.setProperty('--opacity-mid', opacity.toFixed(3));
+                particle.style.setProperty('--opacity-low', (opacity * 0.65).toFixed(3));
+
+                const scaleStart = randomBetween(0.35, 0.55);
+                const scaleMid = scaleStart + randomBetween(0.25, 0.4);
+                const scalePeak = scaleMid + randomBetween(0.1, 0.25);
+                const scaleEnd = randomBetween(0.25, 0.45);
+
+                particle.style.setProperty('--scale-start', scaleStart.toFixed(3));
+                particle.style.setProperty('--scale-mid', scaleMid.toFixed(3));
+                particle.style.setProperty('--scale-peak', scalePeak.toFixed(3));
+                particle.style.setProperty('--scale-end', scaleEnd.toFixed(3));
+
+                const verticalDirection = Math.random() > 0.5 ? 'down' : 'up';
+                if (verticalDirection === 'down') {
+                    particle.classList.add('direction-down');
+                    particle.style.setProperty('--start-y', '-8vh');
+                    particle.style.setProperty('--25-y', '10vh');
+                    particle.style.setProperty('--50-y', '55vh');
+                    particle.style.setProperty('--75-y', '92vh');
+                    particle.style.setProperty('--end-y', '118vh');
+                } else {
+                    particle.classList.add('direction-up');
+                    particle.style.setProperty('--start-y', '105vh');
+                    particle.style.setProperty('--25-y', '78vh');
+                    particle.style.setProperty('--50-y', '42vh');
+                    particle.style.setProperty('--75-y', '12vh');
+                    particle.style.setProperty('--end-y', '-12vh');
+                }
+
                 particle.addEventListener('animationiteration', () => {
-                    if (Math.random() > 0.85) { // Adjusted cleanup rate
+                    if (Math.random() > 0.9) {
                         particle.remove();
                     }
                 });
-                
+
                 particlesContainer.appendChild(particle);
-            }
-            
-            // Continuous particle generation for sustained effect
-            setInterval(() => {
-                const currentParticles = particlesContainer.querySelectorAll('.particle').length;
-                if (currentParticles < 60) { // Maintain minimum particle count
-                    // Add new particles
-                    for (let i = 0; i < 5; i++) {
-                        const particle = document.createElement('div');
-                        particle.className = 'particle';
-                        
-                        const size = Math.random() * 4 + 1.5;
-                        particle.style.width = size + 'px';
-                        particle.style.height = size + 'px';
-                        particle.style.left = Math.random() * 100 + '%';
-                        particle.style.animationDelay = '0s';
-                        particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
-                        
-                        const opacity = Math.random() * 0.3 + 0.1;
-                        particle.style.setProperty('--particle-opacity', opacity);
-                        
-                        particlesContainer.appendChild(particle);
-                    }
-                }
-                
-                // Cleanup excess particles
-                const particles = particlesContainer.querySelectorAll('.particle');
-                if (particles.length > 100) {
-                    for (let i = 0; i < 10; i++) {
-                        if (particles[i]) particles[i].remove();
-                    }
-                }
-            }, 3000); // Check every 3 seconds
-        }
+            };
 
-        // Enhanced scroll-based background animations
-        let ticking = false;
-        
-        function updateBackground() {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            const rateParticles = scrolled * -0.1;
-            
-            // Move floating elements based on scroll
-            document.querySelectorAll('.float-element').forEach((element, index) => {
-                const speed = (index + 1) * 0.2;
-                element.style.transform = `translate(${rate * speed}px, ${scrolled * speed * 0.1}px)`;
+            layers.forEach(layer => {
+                for (let i = 0; i < layer.count; i++) {
+                    spawnParticle(layer, true);
+                }
             });
-            
-            // Adjust grid based on scroll
-            const grid = document.querySelector('.bg-grid');
-            if (grid) {
-                grid.style.transform = `translate(${rateParticles}px, ${scrolled * 0.2}px)`;
-            }
-            
-            ticking = false;
-        }
 
-        function requestBackgroundUpdate() {
-            if (!ticking) {
-                requestAnimationFrame(updateBackground);
-                ticking = true;
-            }
-        }
+            const maintainParticles = () => {
+                const particles = particlesContainer.querySelectorAll('.particle');
 
-        window.addEventListener('scroll', requestBackgroundUpdate);
+                if (particles.length < 70) {
+                    layers.forEach(layer => {
+                        for (let i = 0; i < 4; i++) {
+                            spawnParticle(layer);
+                        }
+                    });
+                }
+
+                const maxParticles = 110;
+                if (particles.length > maxParticles) {
+                    Array.from(particles)
+                        .slice(0, particles.length - maxParticles)
+                        .forEach(particle => particle.remove());
+                }
+            };
+
+            const intervalId = setInterval(maintainParticles, 5000);
+            particlesContainer.dataset.maintainInterval = intervalId.toString();
+        }
 
         // Advanced mouse interaction with background
         let mouseX = 0;
@@ -3211,22 +3482,44 @@ setTimeout(() => {
                 const moveX = (targetX - 0.5) * speed * 50;
                 const moveY = (targetY - 0.5) * speed * 50;
                 
-                element.style.transform += ` translate(${moveX}px, ${moveY}px)`;
+                element.style.transform = `translate(${moveX}px, ${moveY}px)`;
             });
             
             // Subtle particle system response to mouse
             document.querySelectorAll('.particle').forEach((particle, index) => {
                 if (index % 3 === 0) { // Only affect every 3rd particle for performance
                     const speed = 0.2;
-                    const moveX = (targetX - 0.5) * speed * 20;
-                    particle.style.transform += ` translateX(${moveX}px)`;
+                    const moveX = (targetX - 0.5) * speed * 40;
+                    particle.style.setProperty('--interactive-offset', `${moveX}px`);
                 }
             });
             
             requestAnimationFrame(animateBackgroundElements);
         }
 
-        // FIXED Platform demo functionality
+    // Glass dashboard tilt effect
+    const glassDashboard = document.querySelector('.glass-dashboard');
+    if (glassDashboard) {
+        glassDashboard.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 25;
+            const rotateY = (centerX - x) / 25;
+            
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        
+        glassDashboard.addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateY(-5deg)';
+        });
+    }
+
+    // FIXED Platform demo functionality
         function initPlatformDemo() {
             const demoTabs = document.querySelectorAll('.demo-tab');
             const dashboardViews = document.querySelectorAll('.dashboard-view');
@@ -3312,41 +3605,121 @@ setTimeout(() => {
             // Create floating particles with better cleanup
             function createPlatformParticles() {
                 if (!platformParticles) return;
-                
-                // Clear any existing particles first
+
+                if (platformParticles.dataset.maintainInterval) {
+                    clearInterval(Number(platformParticles.dataset.maintainInterval));
+                }
+
                 platformParticles.innerHTML = '';
-                
-                for (let i = 0; i < 15; i++) {
+
+                const layers = [
+                    {
+                        className: 'layer-back',
+                        count: 6,
+                        size: [3.2, 5.5],
+                        duration: [20, 28],
+                        opacity: [0.18, 0.3],
+                        amplitude: [20, 45]
+                    },
+                    {
+                        className: 'layer-mid',
+                        count: 6,
+                        size: [2.8, 4.8],
+                        duration: [16, 24],
+                        opacity: [0.22, 0.36],
+                        amplitude: [26, 55]
+                    },
+                    {
+                        className: 'layer-front',
+                        count: 6,
+                        size: [2.4, 4.2],
+                        duration: [12, 20],
+                        opacity: [0.26, 0.4],
+                        amplitude: [30, 65]
+                    }
+                ];
+
+                const spawnParticle = (layer, initial = false) => {
                     const particle = document.createElement('div');
-                    particle.className = 'platform-particle';
-                    
-                    const size = Math.random() * 3 + 1.5;
-                    particle.style.width = size + 'px';
-                    particle.style.height = size + 'px';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 15 + 's';
-                    particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
-                    
-                    // Add cleanup listener
+                    particle.className = `platform-particle ${layer.className}`;
+
+                    const size = randomBetween(layer.size[0], layer.size[1]);
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+
+                    particle.style.left = `${randomBetween(0, 100)}%`;
+
+                    const duration = randomBetween(layer.duration[0], layer.duration[1]);
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = initial ? `${-randomBetween(0, duration)}s` : '0s';
+
+                    const direction = Math.random() > 0.5 ? 1 : -1;
+                    const amplitude = randomBetween(layer.amplitude[0], layer.amplitude[1]) * direction;
+
+                    particle.style.setProperty('--drift-start', `${amplitude * -0.3}px`);
+                    particle.style.setProperty('--drift-30', `${amplitude * -0.1}px`);
+                    particle.style.setProperty('--drift-70', `${amplitude * 0.6}px`);
+                    particle.style.setProperty('--drift-100', `${amplitude}px`);
+
+                    const opacity = randomBetween(layer.opacity[0], layer.opacity[1]);
+                    particle.style.setProperty('--opacity-mid', opacity.toFixed(3));
+                    particle.style.setProperty('--opacity-low', (opacity * 0.65).toFixed(3));
+
+                    const scaleStart = randomBetween(0.35, 0.55);
+                    const scaleMid = scaleStart + randomBetween(0.2, 0.35);
+                    const scalePeak = scaleMid + randomBetween(0.1, 0.2);
+                    const scaleEnd = randomBetween(0.3, 0.45);
+
+                    particle.style.setProperty('--scale-start', scaleStart.toFixed(3));
+                    particle.style.setProperty('--scale-mid', scaleMid.toFixed(3));
+                    particle.style.setProperty('--scale-peak', scalePeak.toFixed(3));
+                    particle.style.setProperty('--scale-end', scaleEnd.toFixed(3));
+
+                    const verticalDirection = Math.random() > 0.5 ? 'down' : 'up';
+                    if (verticalDirection === 'down') {
+                        particle.style.setProperty('--start-y', '-8%');
+                        particle.style.setProperty('--30-y', '15%');
+                        particle.style.setProperty('--70-y', '72%');
+                        particle.style.setProperty('--end-y', '115%');
+                    } else {
+                        particle.style.setProperty('--start-y', '110%');
+                        particle.style.setProperty('--30-y', '78%');
+                        particle.style.setProperty('--70-y', '28%');
+                        particle.style.setProperty('--end-y', '-10%');
+                    }
+
                     particle.addEventListener('animationiteration', () => {
-                        if (Math.random() > 0.7) { // Randomly remove some particles to prevent buildup
+                        if (Math.random() > 0.82) {
                             particle.remove();
                         }
                     });
-                    
+
                     platformParticles.appendChild(particle);
-                }
-                
-                // Periodic cleanup to ensure no stuck particles
-                setInterval(() => {
-                    const particles = platformParticles.querySelectorAll('.platform-particle');
-                    if (particles.length > 20) {
-                        // Remove oldest particles if too many exist
-                        for (let i = 0; i < 5; i++) {
-                            if (particles[i]) particles[i].remove();
-                        }
+                };
+
+                layers.forEach(layer => {
+                    for (let i = 0; i < layer.count; i++) {
+                        spawnParticle(layer, true);
                     }
-                }, 5000);
+                });
+
+                const maintainParticles = () => {
+                    const particles = platformParticles.querySelectorAll('.platform-particle');
+
+                    if (particles.length < 14) {
+                        layers.forEach(layer => spawnParticle(layer));
+                    }
+
+                    const maxParticles = 26;
+                    if (particles.length > maxParticles) {
+                        Array.from(particles)
+                            .slice(0, particles.length - maxParticles)
+                            .forEach(particle => particle.remove());
+                    }
+                };
+
+                const intervalId = setInterval(maintainParticles, 5500);
+                platformParticles.dataset.maintainInterval = intervalId.toString();
             }
 
             // Enhanced hover effects for commentary items
@@ -3416,8 +3789,19 @@ setTimeout(() => {
             
             // Smooth fade in main content
             document.body.style.transition = 'opacity 0.8s ease-in-out';
-            document.querySelector('.nav').style.transition = 'opacity 0.8s ease-in-out';
-            document.querySelector('.hero').style.transition = 'opacity 0.8s ease-in-out';
+
+            const navElement = document.querySelector('.nav');
+            if (navElement) {
+                navElement.style.transition = 'opacity 0.8s ease-in-out';
+                setTimeout(() => {
+                    navElement.classList.add('nav-ready');
+                }, 200);
+            }
+
+            const heroElement = document.querySelector('.hero');
+            if (heroElement) {
+                heroElement.style.transition = 'opacity 0.8s ease-in-out';
+            }
             document.querySelectorAll('.section').forEach(section => {
                 section.style.transition = 'opacity 0.8s ease-in-out';
             });
