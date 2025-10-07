@@ -523,19 +523,54 @@
             z-index: 1000;
             width: calc(100% - var(--space-2xl));
             max-width: 1000px;
-            background: rgba(255, 255, 255, 0.028);
-            backdrop-filter: blur(32px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: linear-gradient(135deg,
+                rgba(17, 29, 48, 0.38) 0%,
+                rgba(22, 36, 60, 0.28) 32%,
+                rgba(30, 48, 78, 0.18) 72%,
+                rgba(40, 60, 92, 0.12) 100%
+            );
+            backdrop-filter: blur(34px) saturate(180%);
+            -webkit-backdrop-filter: blur(34px) saturate(180%);
+            border: 1px solid rgba(135, 192, 185, 0.18);
             border-radius: var(--radius-xl);
             padding: var(--space-sm) var(--space-lg);
             transition: opacity 0.65s ease,
                         box-shadow 1.1s cubic-bezier(0.19, 1, 0.22, 1),
                         background 0.9s cubic-bezier(0.19, 1, 0.22, 1),
                         border-color 0.9s cubic-bezier(0.19, 1, 0.22, 1),
-                        transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
+                        transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        filter 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            box-shadow: 0 18px 45px rgba(8, 12, 32, 0.3);
+            overflow: hidden;
+            isolation: isolate;
             opacity: 0;
             pointer-events: none;
+        }
+
+        .nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(125deg,
+                rgba(255, 255, 255, 0.24) -10%,
+                rgba(255, 255, 255, 0.08) 45%,
+                rgba(95, 191, 177, 0.05) 100%
+            );
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .nav::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border-radius: calc(var(--radius-xl) - 1px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: inset 0 0 18px rgba(95, 191, 177, 0.08);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .nav.nav-ready {
@@ -544,9 +579,13 @@
         }
 
         .nav.scrolled {
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 22px 52px rgba(8, 12, 32, 0.33);
+            background: linear-gradient(135deg,
+                rgba(17, 29, 48, 0.48) 0%,
+                rgba(22, 36, 60, 0.32) 40%,
+                rgba(30, 48, 78, 0.22) 100%
+            );
+            border-color: rgba(135, 192, 185, 0.26);
         }
 
         .nav-content {
@@ -554,6 +593,8 @@
             align-items: center;
             justify-content: space-between;
             height: 40px;
+            position: relative;
+            z-index: 1;
         }
 
         .logo {
@@ -1898,7 +1939,7 @@
             padding-top: calc(var(--space-xl) + 24px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .confession-card:hover {
@@ -1919,13 +1960,13 @@
         }
 
         .confession-quote::before {
-            content: '"';
+            content: '“';
             font-size: 80px;
             font-weight: 700;
             color: var(--primary);
             position: absolute;
-            top: -25px;
-            left: -8px;
+            top: -12px;
+            left: -6px;
             font-family: 'Space Grotesk', serif;
             opacity: 0.15;
             line-height: 1;
@@ -2542,7 +2583,10 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Your Trading Sidekick</div>
-                <h2 class="section-title headline-gradient">Market chaos? <span class="headline-emphasis">We got you.</span></h2>
+                <h2 class="section-title">
+                    <span class="headline-light">Market chaos?</span>
+                    <span class="headline-gradient"><span class="headline-emphasis">We got you.</span></span>
+                </h2>
                 <p class="section-subtitle">
                     We're the friend who actually reads all the market news, connects the dots, 
                     and tells you what matters to YOUR portfolio. Think less, trade smarter.
@@ -2600,7 +2644,10 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Your Trading Evolution</div>
-                <h2 class="section-title headline-gradient">From panic mode to <span class="headline-emphasis">profit mode</span></h2>
+                <h2 class="section-title">
+                    <span class="headline-light">From panic mode to</span>
+                    <span class="headline-gradient"><span class="headline-emphasis">profit mode</span></span>
+                </h2>
                 <p class="section-subtitle">
                     Watch your trading game transform from chaotic fumbling to confident precision. 
                     It's like having a trading coach who actually has a sense of humor.
@@ -2707,7 +2754,10 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Meet Your Trading Sidekick</div>
-                <h2 class="section-title headline-gradient">Where market chaos becomes your <span class="headline-emphasis">playground</span></h2>
+                <h2 class="section-title">
+                    <span class="headline-light">Where markets become your</span>
+                    <span class="headline-gradient"><span class="headline-emphasis">playground</span></span>
+                </h2>
                 <p class="section-subtitle">
                     This is your command center for turning financial noise into winning moves. 
                     Smart, fast, and surprisingly fun to use.
@@ -2903,7 +2953,10 @@
         <div class="container">
             <div class="section-header fade-in">
                 <div class="section-badge">Trading Confessions</div>
-                <h2 class="section-title headline-gradient">Real stories from traders who <span class="headline-emphasis">found their edge</span></h2>
+                <h2 class="section-title">
+                    <span class="headline-light">Real stories from traders who</span>
+                    <span class="headline-gradient"><span class="headline-emphasis">found their edge</span></span>
+                </h2>
                 <p class="section-subtitle">
                     No sugar-coating, no BS. Just honest confessions from traders who discovered 
                     what it's like to have a sidekick who actually has their back.
